@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="mqttws31.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="jquery.color-2.1.2.min.js"></script>
+
+        <style type="text/css">
+            html, body{
+                font-size: 100%;
+                font-family: Calibri, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            #frame{
+
+            }
+
+            #header{
+                margin: 0 0 0.2em 0;
+                padding: .5em;
+                width: 100%;
+                background-color: #ADA26B;
+                position: fixed;
+                box-sizing: border-box;
+            }
+
+            #topic{
+               font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+               display: block;
+               border: none;
+               width: 100%;
+               font-size: 100%; 
+               background: none;
+               box-sizing: border-box;
+            }
+
+            #topic:focus{
+                background-color: #D0C698;
+            }
+            
+            #topic-box{
+                width: 100%; 
+                box-sizing: border-box;
+                /*padding-right: 3em;*/
+            }
+
+            #loadBtn{
+                display: none;
+
+               float: right;
+               border: none;
+               background: none;
+               color: blue;
+               text-decoration: underline;
+               cursor: pointer;
+               text-align: right;
+            }
+
+            #messages{
+                padding-top: 2.4em;
+            }
+
+            .message {
+                clear: both;
+                border-bottom: solid #ADA26B 1px; 
+                text-align: right;
+                padding: 0.2em
+            }
+
+            h2 {
+                font-size: 90%;
+                margin: 0.1em;
+                float: left;
+                font-weight: normal;
+                color: #666;
+                margin-right: 1em;
+                float: left;
+            }
+
+            p {
+                margin: 0;
+                font-weight: bold;
+                font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+                display: inline-block;
+                padding: 0.2em 0.5em;
+                border-radius: 0.2em;
+            }
+
+
+        </style>
+
+    </head>
+    <body>
+
+        <div id="frame">
+
+            <div id="header">
+                <button id="loadBtn">Go</button>
+                <div id="topic-box">
+                    <input type="text" id="topic" value="linuxdays/#">
+                </div>
+            </div>
+
+            <div id="messages">
+                <!--<div class="message">
+                    <h2>/dotgrid/text</h2>
+                    <p>1234</p>
+                </div>-->
+            </div>
+
+        </div>
+
+
+
+    <script type="text/javascript">
+
+
+        var topicName;
+
+        var client = new Paho.MQTT.Client("mqtt.sh.cvut.cz",parseInt(80),"web" + new Date().getTime());
+
+        client.onMessageArrived = onMessage;
+        client.onconnectionlost = onDisconnect;
+        client.connect({onSuccess:onConnect});
+
+        function onConnect(){
+            console.log("mqtt connected");
+            load();
+        }
+
+        function onMessage(message) {
+            printMsg(message.destinationName, message.payloadString);
+        }
+
+        function onDisconnect(reason) {
+            console.log("disconnected - " + reason);
+        	}
+
+        var topics = {};
+
+
+        function load()
+        {
+            if (topicName)
+            {
+                client.unsubscribe(topicName, {
+                    onSuccess: function(x){console.log(x)}
+                });
+                console.log(topicName);
+                topics = {};
+            }
+
+            topicName = $("#topic").val();
+            client.subscribe(topicName);
+
+            console.info(topicName);
+
+            $("#messages").html("");
+        }
+
+        $("#loadBtn").click(load);
+
+        $("#topic").keypress(function(e) {
+            if(e.which == 13) {
+                load();
+            }
+        });
+
+      function printMsg(topic, msg)
+      {
+        if (!topics[topic])
+        {
+            var div = $("<div class='message'>");
+            $("<h2>").text(topic).appendTo(div);
+            topics[topic] = $("<p>").appendTo(div);
+            div.appendTo("#messages");
+        }
+
+        topics[topic].text(msg);
+
+        topics[topic]
+            .stop()
+            .css({backgroundColor: "#FFD300"})
+            .animate({backgroundColor: "#fff"}, 2000 );
+      }
+
+
+    </script>
+    </body>
+    </html>
