@@ -63,30 +63,45 @@ $("#topic").keypress(function(e) {
 
 function printMsg(topic, msg, retained)
 {
-	if (!topics[topic])
-	{
-    	var div = $("<div class='message'>");
-    	$("<h2>").text(topic).appendTo(div);
-    	topics[topic] = $("<p>").appendTo(div);
-    	div.appendTo("#messages");
+	var line = topics[topic];
 
-		if(retained){
-    		div.addClass("r")
-    	}
+	if (line == undefined) // new message
+	{
+        line = {};
+		line.div = $("<div class='message'>");
+
+    	$("<h2>")
+    		.text(topic)
+    		.appendTo(line.div);
+
+    	line.msg = $("<p>").appendTo(line.div);
+        
+    	line.div.appendTo("#messages");
+    	topics[topic] = line;
+	}
+
+	if(retained)
+	{
+		line.div.addClass("r")
+	}
+	else
+	{
+		line.div.removeClass("r")	
 	}
 
 	if (msg == "") 
 	{
 		msg = "NULL";
-		topics[topic].addClass("sys");
+		line.msg.addClass("sys");
 	}
-	else{
-		topics[topic].removeClass("sys");	
+	else
+    {
+		line.msg.removeClass("sys");	
 	}
 
-	topics[topic].text(msg);
+	line.msg.text(msg);
 
-	topics[topic]
+	line.msg
     	.stop()
     	.css({backgroundColor: "#0CB0FF"})
     	.animate({backgroundColor: "#fff"}, 2000 );
