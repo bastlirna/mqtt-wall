@@ -2,7 +2,7 @@ var topicName;
 var topics = {};
 var titlePrefix = "MQTT Wall";
 
-var client = new Paho.MQTT.Client("mqtt.sh.cvut.cz",parseInt(80),"web" + new Date().getTime());
+var client = new Paho.MQTT.Client(config.server.hostname, config.server.port, "wall" + new Date().getTime());
 
 client.onMessageArrived = onMessage;
 client.onconnectionlost = onDisconnect;
@@ -14,9 +14,7 @@ function onConnect(){
 }
 
 function onMessage(message) {
-
 	console.log(message);
-
     printMsg(message.destinationName, message.payloadString, message.retained);
 }
 
@@ -75,6 +73,15 @@ function printMsg(topic, msg, retained)
 		if(retained){
     		div.addClass("r")
     	}
+	}
+
+	if (msg == "") 
+	{
+		msg = "NULL";
+		topics[topic].addClass("sys");
+	}
+	else{
+		topics[topic].removeClass("sys");	
 	}
 
 	topics[topic].text(msg);

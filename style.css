@@ -100,3 +100,8 @@ html, body{
             border-radius: 0.2em;
         }
 
+        p.sys {
+            font-style: italic;
+            font-weight: normal;
+        }
+
