@@ -29,10 +29,12 @@ html, body{
         font-size: 100%; 
         background: none;
         box-sizing: border-box;
+        cursor: pointer;
     }
 
     #topic:focus{
         background-color: #444;
+        cursor: auto;
     }
 
     #topic-box{
