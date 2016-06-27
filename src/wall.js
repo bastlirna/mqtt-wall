@@ -14,14 +14,12 @@ function WallClient(host, port, path)
     var connectOptions = {};
 
     client.onMessageArrived = function (message) {
-        console.log("Message arrived ", message);
-
+        //console.log("Message arrived ", message);
         that.onMessage(message.destinationName, message.payloadString, message.retained);
     };
 
     client.onConnectionLost = function (error) {
-        console.info("Connection lost, ", error);
-
+        console.info("Connection lost ", error);
         that.onError("Connection lost (" + error.errorMessage + ")", true);
     }
 
@@ -31,8 +29,7 @@ function WallClient(host, port, path)
     }
 
     connectOptions.onFailure = function (error) {
-        console.error("MQTT connect fail ", error);
-
+        console.error("Connect fail ", error);
         that.onError("Fail to connect", true);
     }
 
@@ -48,7 +45,6 @@ WallClient.prototype.onMessage = $.noop();
 WallClient.prototype.onError = $.noop();
 
 WallClient.prototype.subscribe = function (topic, fn) {
-    console.log("begin subscribe");
     var that = this;
 
     // unsubscribe current topic (if exists)
@@ -67,11 +63,11 @@ WallClient.prototype.subscribe = function (topic, fn) {
     // subscribe new topic
     that._client.subscribe(topic, {
         onSuccess: function (r) {
-            console.info("subscribe success", r);
+            console.info("Subscribe '%s' success", topic, r);
             fn();
         },
         onFailure: function (r) {
-            console.error("subscribe failure", r);
+            console.error("subscribe '%s' failure", topic, r);
             that.onError("Subscribe failure");
         }
     });
