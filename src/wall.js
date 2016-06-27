@@ -96,7 +96,7 @@ UI.setTitle = function (topic) {
 UI.toast = function (message, type, persistent) {
     var toast = $("<div class='toast-item'>")
         .text(message)
-        .addClass(type)
+        .addClass(type || "info")
         .hide()
         .appendTo("#toast")
         .fadeIn();
