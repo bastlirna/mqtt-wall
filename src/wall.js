@@ -99,6 +99,10 @@ UI.toast = function (message, type, persistent) {
 
     if (persistent != true) {
         toast.delay(5000).slideUp().queue(function () { this.remove(); });
+    } else {
+        $("<span> – <a href='javascript:;'>reload</a></span>")
+            .find("a").click(function () { location.reload(); }).end()
+            .appendTo(toast);
     }
 }
 

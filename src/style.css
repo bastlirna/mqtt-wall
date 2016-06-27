@@ -61,6 +61,7 @@ html, body{
     right: 0;
     z-index: 2;
     font-size: 90%;
+    position: fixed;
     }
 
     .toast-item {
@@ -69,6 +70,10 @@ html, body{
         text-align: right;
         border-radius: 4px;
         box-shadow: 0 0 12px #333;
+        }
+
+        .toast-item a {
+            color: #aaa;
         }
 
         .toast-item.info {
