@@ -151,7 +151,7 @@ UI.printMsg = function (topic, msg, retained) {
 // --- Main -------------------------------------------------------------------
 
 
-var client = new WallClient(config.server.hostname, config.server.port, "");
+var client = new WallClient(config.server.host, config.server.port, config.server.path);
 
 client.onConnected = function () {
     load();
@@ -188,4 +188,6 @@ $("#topic").keypress(function(e) {
 // URL hash 
 if (location.hash != "") {
     $("#topic").val(location.hash.substr(1));
+} else {
+    $("#topic").val(config.defaultTopic);
 }
