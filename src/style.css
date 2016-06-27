@@ -16,7 +16,7 @@ html, body{
     color: #fff;
     position: fixed;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 1;
     }
 
     #topic{
@@ -55,6 +55,30 @@ html, body{
         text-align: right;
     }
 
+#toast {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 90%;
+    }
+
+    .toast-item {
+        background-color: green;
+        color: #000;
+        margin: 5px;
+        padding: 2px 10px;
+        text-align: right;
+        }
+
+        .toast-item.info {
+            background-color: #00F;
+            color: #00;
+        }
+        .toast-item.error {
+            background-color: red;
+            color: #00;
+        }
 
 #messages{
     padding-top: 2.6em;

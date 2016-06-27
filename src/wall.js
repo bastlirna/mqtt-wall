@@ -22,7 +22,7 @@ function WallClient(host, port, path)
     client.onConnectionLost = function (error) {
         console.info("Connection lost, ", error);
 
-        that.onError("Connection lost");
+        that.onError("Connection lost (" + error.errorMessage + ")", true);
     }
 
     connectOptions.onSuccess = function () {
@@ -33,7 +33,7 @@ function WallClient(host, port, path)
     connectOptions.onFailure = function (error) {
         console.error("MQTT connect fail ", error);
 
-        that.onError("Fail to connect");
+        that.onError("Fail to connect", true);
     }
 
     client.connect(connectOptions);
@@ -79,6 +79,10 @@ WallClient.prototype.subscribe = function (topic, fn) {
     that.currentTopic = topic;
 };
 
+WallClient.prototype.toString = function () {
+    return this._client.host;
+}
+
 
 // --- UI ---------------------------------------------------------------------
 
@@ -87,6 +91,19 @@ var UI = {};
 
 UI.setTitle = function (topic) {
     document.title = "MQTT Wall" + (topic ? (" for " + topic) : "");
+}
+
+UI.toast = function (message, type, persistent) {
+    var toast = $("<div class='toast-item'>")
+        .text(message)
+        .addClass(type)
+        .hide()
+        .appendTo("#toast")
+        .fadeIn();
+
+    if (persistent != true) {
+        toast.delay(5000).slideUp().queue(function () { this.remove(); });
+    }
 }
 
 UI.printMsg = function (topic, msg, retained) {
@@ -142,6 +159,11 @@ var client = new WallClient(config.server.hostname, config.server.port, "");
 
 client.onConnected = function () {
     load();
+    UI.toast("Connected to " + client.toString());
+}
+
+client.onError = function (description, isFatal) {
+    UI.toast(description, "error", isFatal);
 }
 
 client.onMessage = function (topic, msg, retained) {
