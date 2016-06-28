@@ -139,6 +139,7 @@ html, body{
     #footer p{
         margin: 0;
         padding: 0;
+        //display: none;
     }
 
     #footer a {
@@ -152,6 +153,18 @@ html, body{
         background-color: #eee;
         border-radius: 3px;
         font-family: Calibri, sans-serif;
+    }
+
+    #status-state {
+        &.connected em {
+            color: green;
+        }
+        &.connecting em {
+            color: orange;
+        }
+        &.fail em {
+            color: red;
+        }
     }
 
 

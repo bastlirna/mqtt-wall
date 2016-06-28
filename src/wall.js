@@ -1,17 +1,12 @@
-var topicName;
-var topics = {};
-var titlePrefix = "MQTT Wall";
-
-
 // --- Application objects ----------------------------------------------------
 
 class WallClient {
 
     constructor(host, port, path) {
         
-        var clientId = "wall-" + new Date().getTime();
+        this.clientId = "wall-" + new Date().getTime();
         
-        var client = new Paho.MQTT.Client(host, port, path, clientId);
+        var client = new Paho.MQTT.Client(host, port, path, this.clientId);
         var connectOptions = {};
 
         client.onMessageArrived = (message) => {
@@ -44,9 +39,6 @@ class WallClient {
         this.onError = $.noop();
     }
 
-// events
-    
-
     subscribe (topic, fn) {
     
         // unsubscribe current topic (if exists)
@@ -78,7 +70,13 @@ class WallClient {
     }
 
     toString () {
-        return this.client.host;
+        var str = this.client.host;
+
+        if (this.client.port != 80) {
+            str += ":" + this.client.port;
+        }
+
+        return str;
     }
 }
 
@@ -187,20 +185,46 @@ class MessageContainer {
     }
 }
 
+class Footer {
+
+    set clientId(value) {
+        $("#status-client").text(value);
+    }
+
+    set host(value) {
+        $("#status-host").text("ws://" + value);
+    }
+
+    set state(value) {
+        var className = ["connecting", "connected", "fail"];
+        var text = ["connecting...", "connected", "not connected"];
+
+        $("#status-state").removeClass().addClass(className[value]);
+        $("#status-state span").text(text[value]);
+    }
+}
 
 // --- Main -------------------------------------------------------------------
 
 
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
 var messages = new MessageContainer($("#messages"));
+var footer = new Footer();
+
+footer.clientId = client.clientId;
+footer.host = client.toString();
+footer.state = 0;
 
 client.onConnected = () => {
     load();
-    UI.toast("Connected to " + client.toString());
+    footer.state = 1;
+    UI.toast("Connected to host " + client.toString());
 }
 
 client.onError = (description, isFatal) => {
     UI.toast(description, "error", isFatal);
+
+    if (isFatal) footer.state = 2;
 }
 
 client.onMessage = (topic, msg, retained) => {
