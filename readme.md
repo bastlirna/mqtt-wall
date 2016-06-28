@@ -1,8 +1,16 @@
 # MQTT Wall
 
-Simple web page for show subscribed topics from MQTT server.
+*Simple web page for show subscribed topics from MQTT server.*
 
+<center>
 ![Screenshot](screenshot.png)
+</center>
+
+## Main Goal
+
+- Clean and simple design
+- Nice on big screen with huge font (overhead projector during lecture)
+- Just subscription of single topic (including wildcards ofcourse)
 
 ## Disclaimer
 
