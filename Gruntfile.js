@@ -67,5 +67,6 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerTask('build', ['copy', 'less', 'babel']);
   grunt.registerTask('default', ['copy', 'less', 'babel', 'watch']);
 };

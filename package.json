@@ -3,6 +3,8 @@
   "description": "",
   "version": "0.2.0",
   "private": true,
+  "scripts": {
+  },
   "devDependencies": {
     "grunt": "^1.0.0",
     "grunt-babel": "*",
