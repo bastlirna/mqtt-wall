@@ -20,7 +20,7 @@ function WallClient(host, port, path)
 
     client.onConnectionLost = function (error) {
         console.info("Connection lost ", error);
-        that.onError("Connection lost (" + error.errorMessage + ")", true);
+        that.onError(`Connection lost (${error.errorMessage})`, true);
     }
 
     connectOptions.onSuccess = function () {

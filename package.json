@@ -1,0 +1,17 @@
+{
+  "name": "mqtt-wall",
+  "description": "",
+  "version": "0.2.0",
+  "private": true,
+  "devDependencies": {
+    "grunt": "^1.0.0",
+    "grunt-babel": "*",
+    "babel-preset-es2015": "*",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.0",
+    "grunt-contrib-less": "^1.2.0",
+    "jit-grunt": "^0.10.0",
+    "load-grunt-tasks": "^3.5.0"
+  },
+  "dependencies": {}
+}
