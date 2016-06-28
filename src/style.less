@@ -1,30 +1,27 @@
+// constants 
+@header-color: #555;
+@monospace-font: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
 
-@base: #666;
-
-
+// style definitions
 html, body{
     font-family: Calibri, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-#frame{
-}
-
 #header{
     margin: 0 0 0.2em 0;
     padding: .5em;
     width: 100%;
-    background-color: #666;
-    color: #fff;
+    background-color: @header-color;
+    color:  contrast(@header-color);
     position: fixed;
     box-sizing: border-box;
     z-index: 1;
     
-
     #topic{
-        font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
-        color: #fff;
+        font-family: @monospace-font;
+        color:  contrast(@header-color);
         padding: 2px;
         display: block;
         border: none;
@@ -36,16 +33,14 @@ html, body{
     }
 
     #topic:focus{
-        background-color: #444;
+        background-color: lighten(@header-color, 5%);
         cursor: auto;
     }
 
     #topic-box{
         width: 100%; 
         box-sizing: border-box;
-        /*padding-right: 3em;*/
     }
-
 } 
 
 #toast {
@@ -55,7 +50,6 @@ html, body{
     z-index: 2;
     font-size: 90%;
     position: fixed;
-    }
 
     .toast-item {
         margin: 8px 10px;
@@ -63,33 +57,43 @@ html, body{
         text-align: right;
         border-radius: 4px;
         box-shadow: 0 0 12px #333;
-        }
 
-        .toast-item a {
+        a {
             color: #aaa;
         }
 
-        .toast-item.info {
+        &.info {
             background-color: #116611;
             color: #fff;
         }
-        .toast-item.error {
+
+        &.error {
             background-color: #801515;
             color: #fff;
         }
+    }
+}
 
 #messages{
     padding-top: 2.6em;
-    }
 
     .message {
         clear: both;
         border-bottom: solid #888 1px; 
         text-align: right;
-        padding: 0.2em
+        padding: 0.2em;
+        
+        h2 {
+            font-size: 90%;
+            margin: 0.1em;
+            float: left;
+            font-weight: normal;
+            color: #666;
+            margin-right: 1em;
+            float: left;
         }
 
-        .message.r h2::after{
+        &.r h2::after{
             color: #fff;
             font-size: 75%;
             content: "R";
@@ -105,17 +109,7 @@ html, body{
             border-radius: 4px; /* future proofing */
         }
 
-        .message h2 {
-            font-size: 90%;
-            margin: 0.1em;
-            float: left;
-            font-weight: normal;
-            color: #666;
-            margin-right: 1em;
-            float: left;
-        }
-
-        .message p {
+        p {
             margin: 0;
             font-weight: bold;
             font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
@@ -124,29 +118,30 @@ html, body{
             border-radius: 0.2em;
         }
 
-        .message p.sys {
+        p.sys {
             font-style: italic;
             font-weight: normal;
         }
+    }
+}
+
 
 #footer {
     margin: 15px;
     text-align: center;
     color: #777;
     font-size: 75%;
-    }
-
-    #footer p{
+        
+    p{
         margin: 0;
         padding: 0;
-        //display: none;
     }
 
-    #footer a {
+    a {
         color: #888;
     }
 
-    #footer code {
+    code {
         padding: 1px 4px;
         margin: 1px 0;
         display: inline-block;
@@ -166,5 +161,5 @@ html, body{
             color: red;
         }
     }
-
+}
 
