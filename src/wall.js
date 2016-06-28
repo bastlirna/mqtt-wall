@@ -5,80 +5,82 @@ var titlePrefix = "MQTT Wall";
 
 // --- Application objects ----------------------------------------------------
 
+class WallClient {
 
-function WallClient(host, port, path)
-{
-    var that = this;
-    var clientId = "wall-" + new Date().getTime();
-    var client = new Paho.MQTT.Client(host, port, path, clientId);
-    var connectOptions = {};
+    constructor(host, port, path) {
+        
+        var clientId = "wall-" + new Date().getTime();
+        
+        var client = new Paho.MQTT.Client(host, port, path, clientId);
+        var connectOptions = {};
 
-    client.onMessageArrived = function (message) {
-        //console.log("Message arrived ", message);
-        that.onMessage(message.destinationName, message.payloadString, message.retained);
-    };
+        client.onMessageArrived = (message) => {
+            //console.log("Message arrived ", message);
+            this.onMessage(message.destinationName, message.payloadString, message.retained);
+        };
 
-    client.onConnectionLost = function (error) {
-        console.info("Connection lost ", error);
-        that.onError(`Connection lost (${error.errorMessage})`, true);
+        client.onConnectionLost = (error) => {
+            console.info("Connection lost ", error);
+            this.onError(`Connection lost (${error.errorMessage})`, true);
+        }
+
+        connectOptions.onSuccess = () => {
+            console.info("Connect success");
+            this.onConnected();
+        }
+
+        connectOptions.onFailure = (error) => {
+            console.error("Connect fail ", error);
+            this.onError("Fail to connect", true);
+        }
+
+        client.connect(connectOptions);
+
+        this.client = client;
+        this.currentTopic = null;
+
+        this.onConnected = $.noop();
+        this.onMessage = $.noop();
+        this.onError = $.noop();
     }
-
-    connectOptions.onSuccess = function () {
-        console.info("Connect success");
-        that.onConnected();
-    }
-
-    connectOptions.onFailure = function (error) {
-        console.error("Connect fail ", error);
-        that.onError("Fail to connect", true);
-    }
-
-    client.connect(connectOptions);
-
-    this._client = client;
-    this.currentTopic = null;
-}
 
 // events
-WallClient.prototype.onConnected = $.noop();
-WallClient.prototype.onMessage = $.noop();
-WallClient.prototype.onError = $.noop();
+    
 
-WallClient.prototype.subscribe = function (topic, fn) {
-    var that = this;
-
-    // unsubscribe current topic (if exists)
-    if (this.currentTopic !== null) {
-        var oldTopic = this.currentTopic;
-        this._client.unsubscribe(oldTopic, {
-            onSuccess: function(){
-                console.info("Unsubscribe '%s' success", oldTopic);
-            },
-            onFailure: function(error){
-                console.error("Unsubscribe '%s' failure", oldTopic, error);
-            },
-        });
-    }
-  
-    // subscribe new topic
-    that._client.subscribe(topic, {
-        onSuccess: function (r) {
-            console.info("Subscribe '%s' success", topic, r);
-            fn();
-        },
-        onFailure: function (r) {
-            console.error("subscribe '%s' failure", topic, r);
-            that.onError("Subscribe failure");
+    subscribe (topic, fn) {
+    
+        // unsubscribe current topic (if exists)
+        if (this.currentTopic !== null) {
+            var oldTopic = this.currentTopic;
+            this.client.unsubscribe(oldTopic, {
+                onSuccess: () => {
+                    console.info("Unsubscribe '%s' success", oldTopic);
+                },
+                onFailure: (error) => {
+                    console.error("Unsubscribe '%s' failure", oldTopic, error);
+                },
+            });
         }
-    });
+    
+        // subscribe new topic
+        this.client.subscribe(topic, {
+            onSuccess: (r) => {
+                console.info("Subscribe '%s' success", topic, r);
+                fn();
+            },
+            onFailure: (r) => {
+                console.error("subscribe '%s' failure", topic, r);
+                this.onError("Subscribe failure");
+            }
+        });
 
-    that.currentTopic = topic;
-};
+        this.currentTopic = topic;
+    }
 
-WallClient.prototype.toString = function () {
-    return this._client.host;
+    toString () {
+        return this.client.host;
+    }
 }
-
 
 // --- UI ---------------------------------------------------------------------
 
@@ -87,12 +89,12 @@ var UI = {};
 
 UI.setTitle = function (topic) {
     document.title = "MQTT Wall" + (topic ? (" for " + topic) : "");
-}
-
-UI.toast = function (message, type, persistent) {
+};
+ 
+UI.toast = function (message, type = "info", persistent = false) {
     var toast = $("<div class='toast-item'>")
         .text(message)
-        .addClass(type || "info")
+        .addClass(type)
         .hide()
         .appendTo("#toast")
         .fadeIn();
@@ -104,51 +106,85 @@ UI.toast = function (message, type, persistent) {
             .find("a").click(function () { location.reload(); }).end()
             .appendTo(toast);
     }
-}
+};
 
-UI.printMsg = function (topic, msg, retained) {
-    var line = topics[topic];
+class MessageLine {
 
-    if (line == undefined) // new message
-    {
-        line = {};
-        line.div = $("<div class='message'>");
+    constructor(topic, $parent){
+        this.topic = topic;
+        this.$parent = $parent;
+        this.init();
+    }
+
+    init() {
+        this.$root = $("<div class='message'>");
 
         $("<h2>")
-            .text(topic)
-            .appendTo(line.div);
+            .text(this.topic)
+            .appendTo(this.$root);
 
-        line.msg = $("<p>").appendTo(line.div);
+        this.$payload = $("<p>").appendTo(this.$root);
         
-        line.div.appendTo("#messages");
-        topics[topic] = line;
+        this.$root.appendTo(this.$parent);
     }
 
-    if(retained)
-    {
-        line.div.addClass("r")
-    }
-    else
-    {
-        line.div.removeClass("r")   
+    set isRetained(value) {
+        this.$root.toggleClass("r", value);
     }
 
-    if (msg == "") 
-    {
-        msg = "NULL";
-        line.msg.addClass("sys");
-    }
-    else
-    {
-        line.msg.removeClass("sys");    
+    set isSystemPayload(value) {
+        this.$payload.toggleClass("sys", value);
     }
 
-    line.msg.text(msg);
+    highlight() {
+        this.$payload
+            .stop()
+            .css({backgroundColor: "#0CB0FF"})
+            .animate({backgroundColor: "#fff"}, 2000);
+    }
 
-    line.msg
-        .stop()
-        .css({backgroundColor: "#0CB0FF"})
-        .animate({backgroundColor: "#fff"}, 2000 );
+    update(payload, retained) {
+        
+        this.isRetained = retained;
+        
+        if (payload == "") 
+        {
+            payload = "NULL";
+            this.isSystemPayload = true;
+        }
+        else
+        {
+            this.isSystemPayload = false;    
+        }
+
+        this.$payload.text(payload);
+        this.highlight();       
+    }
+}
+
+class MessageContainer {
+    constructor($parent) {
+        this.$parent = $parent;
+        this.init();
+    }
+
+    init() {
+        this.reset();
+    }
+
+    reset() {
+        this.lines = {};
+        this.$parent.html("");
+    }
+
+    update (topic, payload, retained) {
+
+        if (this.lines[topic] === undefined) {
+            this.lines[topic] = new MessageLine(topic, this.$parent);
+        }
+
+        this.lines[topic].update(payload, retained);
+    }
 }
 
 
@@ -156,18 +192,19 @@ UI.printMsg = function (topic, msg, retained) {
 
 
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
+var messages = new MessageContainer($("#messages"));
 
-client.onConnected = function () {
+client.onConnected = () => {
     load();
     UI.toast("Connected to " + client.toString());
 }
 
-client.onError = function (description, isFatal) {
+client.onError = (description, isFatal) => {
     UI.toast(description, "error", isFatal);
 }
 
-client.onMessage = function (topic, msg, retained) {
-    UI.printMsg(topic, msg, retained);
+client.onMessage = (topic, msg, retained) => {
+    messages.update(topic, msg, retained);
 }
 
 function load() {
@@ -178,9 +215,7 @@ function load() {
         location.hash = "#" + topic;
     });
 
-    // clean old messages
-    topics = {};
-    $("#messages").html("");
+    messages.reset();
 }
 
 $("#topic").keypress(function(e) {

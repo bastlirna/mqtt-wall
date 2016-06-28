@@ -11,7 +11,9 @@
     "grunt-contrib-cssmin": "^1.0.0",
     "grunt-contrib-less": "^1.2.0",
     "jit-grunt": "^0.10.0",
-    "load-grunt-tasks": "^3.5.0"
+    "load-grunt-tasks": "^3.5.0",
+    "time-grunt": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0"
   },
   "dependencies": {}
 }
