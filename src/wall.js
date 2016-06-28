@@ -4,7 +4,7 @@ class WallClient {
 
     constructor(host, port, path) {
         
-        this.clientId = "wall-" + new Date().getTime();
+        this.clientId = WallClient.generateClientId();
         
         var client = new Paho.MQTT.Client(host, port, path, this.clientId);
         var connectOptions = {};
@@ -37,6 +37,12 @@ class WallClient {
         this.onConnected = $.noop();
         this.onMessage = $.noop();
         this.onError = $.noop();
+    }
+
+    static generateClientId() {
+        var time = Date.now() % 1000;
+        var rnd = Math.round(Math.random() * 1000);
+        return `wall-${time}-${rnd}`;
     }
 
     subscribe (topic, fn) {
