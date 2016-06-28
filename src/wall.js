@@ -1,6 +1,6 @@
 // --- Application objects ----------------------------------------------------
 
-class WallClient {
+classxx WallClient {
 
     constructor(host, port, path) {
         
