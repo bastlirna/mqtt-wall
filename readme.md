@@ -6,6 +6,10 @@
 <img src="https://raw.githubusercontent.com/bastlirna/mqtt-wall/master/screenshot.png" alt="MQTT Wall Screenshot">
 </p>
 
+## Status
+
+[![Build Status](https://travis-ci.org/bastlirna/mqtt-wall.svg?branch=master)](https://travis-ci.org/bastlirna/mqtt-wall)
+
 ## Main Goal
 
 - Clean and simple design
