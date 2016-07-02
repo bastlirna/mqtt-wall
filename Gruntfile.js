@@ -21,6 +21,23 @@ module.exports = function(grunt) {
       }
     },
 
+    // add version info to index.html
+    'string-replace': {
+      inline: {
+        files: {
+          'dist/index.html': 'src/index.html',
+        },
+        options: {
+          replacements: [ 
+            {
+              pattern: '$VERSION$',
+              replacement: '<%= pkg.version %>'
+            }
+          ]
+        }
+      }
+    },
+
     // compile less files
     less: {
       default: {
@@ -61,12 +78,12 @@ module.exports = function(grunt) {
       },
       html: {
         files: 'src/**/*.html',
-        tasks: ['copy']
+        tasks: ['copy','string-replace']
       }
     },
 
   });
 
-  grunt.registerTask('build', ['copy', 'less', 'babel']);
-  grunt.registerTask('default', ['copy', 'less', 'babel', 'watch']);
+  grunt.registerTask('build', ['copy', 'less', 'babel', 'string-replace']);
+  grunt.registerTask('default', ['build', 'watch']);
 };
