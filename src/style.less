@@ -17,7 +17,7 @@ html, body{
     color:  contrast(@header-color);
     position: fixed;
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 1; 
     
     #topic{
         font-family: @monospace-font;
@@ -97,7 +97,7 @@ html, body{
             color: #fff;
             font-size: 75%;
             content: "R";
-            font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+            font-family: @monospace-font;
             position: relative;
             top: -0.1em;
             left: 5px;
@@ -112,7 +112,7 @@ html, body{
         p {
             margin: 0;
             font-weight: bold;
-            font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+            font-family: @monospace-font;
             display: inline-block;
             padding: 0.2em 0.5em;
             border-radius: 0.2em;

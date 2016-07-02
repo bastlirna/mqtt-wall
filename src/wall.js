@@ -17,17 +17,17 @@ class WallClient {
         client.onConnectionLost = (error) => {
             console.info("Connection lost ", error);
             this.onError(`Connection lost (${error.errorMessage})`, true);
-        }
+        };
 
         connectOptions.onSuccess = () => {
             console.info("Connect success");
             this.onConnected();
-        }
+        };
 
         connectOptions.onFailure = (error) => {
             console.error("Connect fail ", error);
             this.onError("Fail to connect", true);
-        }
+        };
 
         client.connect(connectOptions);
 
@@ -56,7 +56,7 @@ class WallClient {
                 },
                 onFailure: (error) => {
                     console.error("Unsubscribe '%s' failure", oldTopic, error);
-                },
+                }
             });
         }
     
@@ -81,6 +81,10 @@ class WallClient {
         if (this.client.port != 80) {
             str += ":" + this.client.port;
         }
+
+        if (this.client.path != "") {
+            str += "" + this.client.path;
+        } 
 
         return str;
     }
@@ -225,17 +229,17 @@ client.onConnected = () => {
     load();
     footer.state = 1;
     UI.toast("Connected to host " + client.toString());
-}
+};
 
 client.onError = (description, isFatal) => {
     UI.toast(description, "error", isFatal);
 
     if (isFatal) footer.state = 2;
-}
+};
 
 client.onMessage = (topic, msg, retained) => {
     messages.update(topic, msg, retained);
-}
+};
 
 function load() {
     var topic = $("#topic").val();

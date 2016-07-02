@@ -13,9 +13,8 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                host: "192.168.88.4",
-                port: 9001,
-                path: ""
+                //host: "192.168.88.4", port: 9001, path: ""
+                host: "mqtt.sh.cvut.cz", port: 80, path: "/mqtt"
             },
 
             // Default subscribed topic 
@@ -30,7 +29,7 @@
 
             <div id="header">
                 <div id="topic-box">
-                    <input type="text" id="topic" value="">
+                    <input type="text" id="topic" value="" title="Topic to subscribe">
                 </div>
             </div>
 
@@ -55,8 +54,7 @@
                 <p class="status">
                     Client <code id="status-client" title="Client ID">?</code> is 
                     <code id="status-state" class="connecting"><em>&bull;</em> <span>connecting...</span></code> to 
-                    <code id="status-host">?</code> 
-                    <!--<span id="status-uptime">for <code id="status-uptime-value">5 min</code></span>-->
+                    <code id="status-host">?</code>
                     <em>via</em> MQTT Wall v0.2 (<a href="https://github.com/bastlirna/mqtt-wall">github</a>).
                 </p>
             </div>
