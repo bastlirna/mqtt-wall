@@ -66,6 +66,23 @@ module.exports = function(grunt) {
         }
     },
 
+    // publish package
+    compress: {
+      main: {
+        options: {
+          archive: 'pub/wall-<%= pkg.version %>.zip'
+        },
+        files: [
+          {
+            cwd: 'dist/',
+            src: ['**'], 
+            dest: 'wall-<%= pkg.version %>/',
+            expand: true
+          }
+        ]
+      }
+    },
+
     // watch changes
     watch: {
       less: {
@@ -85,5 +102,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', ['copy', 'less', 'babel', 'string-replace']);
+  grunt.registerTask('pub', ['build', 'compress']);
   grunt.registerTask('default', ['build', 'watch']);
 };
