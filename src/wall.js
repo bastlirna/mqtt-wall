@@ -120,16 +120,27 @@ class MessageLine {
 
     constructor(topic, $parent){
         this.topic = topic;
+        this.counter = 0;
         this.$parent = $parent;
         this.init();
     }
 
     init() {
-        this.$root = $("<div class='message'>");
+        this.$root = $("<article class='message'>");
+
+        var header = $("<header>").appendTo(this.$root);
 
         $("<h2>")
             .text(this.topic)
-            .appendTo(this.$root);
+            .appendTo(header);
+
+        if (window.config.showCounter) {
+            this.$counterMark = $("<span class='mark counter' title='Message counter'>0</span>")
+                .appendTo(header);
+        }
+
+        this.$retainMark = $("<span class='mark retain' title='Retain message'>R</span>")
+            .appendTo(header);
 
         this.$payload = $("<p>").appendTo(this.$root);
         
@@ -137,7 +148,7 @@ class MessageLine {
     }
 
     set isRetained(value) {
-        this.$root.toggleClass("r", value);
+        this.$retainMark[value ? 'show' : 'hide']();
     }
 
     set isSystemPayload(value) {
@@ -152,8 +163,12 @@ class MessageLine {
     }
 
     update(payload, retained) {
-        
+        this.counter ++;
         this.isRetained = retained;
+
+        if (this.$counterMark) {
+            this.$counterMark.text(this.counter)
+        }
         
         if (payload == "") 
         {
@@ -218,7 +233,7 @@ class Footer {
 
 
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
-var messages = new MessageContainer($("#messages"));
+var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
 
 footer.clientId = client.clientId;
