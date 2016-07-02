@@ -13,13 +13,15 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                host: "192.168.88.4",
-                port: 9001,
-                path: ""
+                //host: "192.168.88.4", port: 9001, path: ""
+                host: "mqtt.sh.cvut.cz", port: 80, path: "/mqtt"
             },
 
             // Default subscribed topic 
-            defaultTopic: "/#"
+            defaultTopic: "/#",
+
+            // Show counter for each topic
+            showCounter: true
         };
 
         </script>
@@ -29,9 +31,8 @@
         <div id="frame">
 
             <div id="header">
-                <button id="loadBtn">Go</button>
                 <div id="topic-box">
-                    <input type="text" id="topic" value="/#">
+                    <input type="text" id="topic" value="" title="Topic to subscribe">
                 </div>
             </div>
 
@@ -43,13 +44,33 @@
                 -->
             </div>
 
-            <div id="messages">
-                <!--
-                <div class="message">
-                    <h2>/dotgrid/text</h2>
+            <section class="messages">
+                
+                <article class="message">
+                    <header>
+                        <h2>/dotgrid/text</h2><span class="mark retain">R</span><span class="mark counter">123</span>
+                    </header>
+                    
                     <p>1234</p>
-                </div>
-                -->
+                </article>
+
+                <article class="message">
+                    <header>
+                        <h2>/dotgrid/text2/assdasda/sda</h2><span class="mark counter">8888</span>
+                    </header>
+                    
+                    <p>Nějaká hodně dlouhý<br>více řádkový<br>text</p>
+                </article>
+                
+            </section>
+
+            <div id="footer">
+                <p class="status">
+                    Client <code id="status-client" title="Client ID">?</code> is 
+                    <code id="status-state" class="connecting"><em>&bull;</em> <span>connecting...</span></code> to 
+                    <code id="status-host">?</code>
+                    <em>via</em> MQTT Wall $VERSION$ (<a href="https://github.com/bastlirna/mqtt-wall">github</a>).
+                </p>
             </div>
         </div>
 

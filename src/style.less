@@ -1,0 +1,194 @@
+// constants 
+@header-color: #555;
+
+@message-separator-color: @header-color;
+
+@monospace-font: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+
+@import "reset.less";
+
+// Clearfix
+// Source: http://nicolasgallagher.com/micro-clearfix-hack/
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// style definitions
+html, body{
+    font-family: Calibri, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#header{
+    margin: 0 0 0.2em 0;
+    padding: .5em;
+    width: 100%;
+    background-color: @header-color;
+    color:  contrast(@header-color);
+    position: fixed;
+    box-sizing: border-box;
+    z-index: 1; 
+    
+    #topic{
+        font-family: @monospace-font;
+        color:  contrast(@header-color);
+        padding: 2px;
+        display: block;
+        border: none;
+        width: 100%;
+        font-size: 100%; 
+        background: none;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    #topic:focus{
+        background-color: lighten(@header-color, 5%);
+        cursor: auto;
+    }
+
+    #topic-box{
+        width: 100%; 
+        box-sizing: border-box;
+    }
+} 
+
+#toast {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 90%;
+    position: fixed;
+
+    .toast-item {
+        margin: 8px 10px;
+        padding: 2px 12px;
+        text-align: right;
+        border-radius: 4px;
+        box-shadow: 0 0 12px #333;
+
+        a {
+            color: #aaa;
+        }
+
+        &.info {
+            background-color: #116611;
+            color: #fff;
+        }
+
+        &.error {
+            background-color: #801515;
+            color: #fff;
+        }
+    }
+}
+
+.messages {
+    padding-top: 2.6em; // height of header
+
+    .message {
+        .clearfix();
+        text-align: right;
+        border-bottom: solid @message-separator-color 1px; 
+        padding: .3rem;
+
+        header {
+            float: left;
+            padding: .1rem;
+            color: #333;
+            
+
+            font-size: 1.1rem;
+
+            h2 {
+                display: inline-block;
+                padding-top: .2rem;
+                margin-right: .5rem;
+            }
+
+            .mark {
+                display: inline-block;
+                background-color: #ccc;
+                color: #666;
+                font-size: 0.70rem;
+                padding: 0.1rem 0.2rem;
+                margin: -.1rem .3rem 0 0;
+                border-radius: 0.3rem;
+                cursor: default;
+                vertical-align: middle;
+                
+                &.retain {
+                    background-color: lighten(#801515, 30%);
+                    color: #fff;
+                }
+
+                &.counter {
+                }
+            }
+        }
+
+        p {
+            float: right;
+            font-size: 1.1rem;
+            display: inline-block;
+            padding: .3rem .5rem;
+            
+            font-family: @monospace-font;
+            font-weight: bold;
+            border-radius: .3rem;
+            color: #333;
+            background-color: #aaa;
+        }
+    }
+}
+
+
+#footer {
+    clear: both;
+    margin: 15px;
+    text-align: center;
+    color: #777;
+    font-size: 75%;
+        
+    p{
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        color: #888;
+        text-decoration: underline;
+    }
+
+    code {
+        padding: 1px 4px;
+        margin: 1px 0;
+        display: inline-block;
+        background-color: #eee;
+        border-radius: 3px;
+        font-family: Calibri, sans-serif;
+    }
+
+    #status-state {
+        &.connected em {
+            color: green;
+        }
+        &.connecting em {
+            color: orange;
+        }
+        &.fail em {
+            color: red;
+        }
+    }
+}
+
