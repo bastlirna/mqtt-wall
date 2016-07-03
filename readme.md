@@ -3,7 +3,7 @@
 *Simple web page for show subscribed topics from MQTT server.*
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/bastlirna/mqtt-wall/master/screenshot.png" alt="MQTT Wall Screenshot">
+<img src="https://raw.githubusercontent.com/bastlirna/mqtt-wall/master/doc/screenshot.png" alt="MQTT Wall Screenshot">
 </p>
 
 ## Status
