@@ -7,6 +7,13 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    // get GIT hash 
+    githash: {
+        main: {
+          options: {},
+        }
+      },
+
     // copy static files
     copy: {
       main: {
@@ -70,7 +77,7 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'pub/wall-<%= pkg.version %>.zip'
+          archive: 'pub/wall-<%= pkg.version %>-<%= githash.main.short %>.zip'
         },
         files: [
           {
@@ -101,7 +108,9 @@ module.exports = function(grunt) {
 
   });
 
+grunt.loadNpmTasks('grunt-githash');
+
   grunt.registerTask('build', ['copy', 'less', 'babel', 'string-replace']);
-  grunt.registerTask('pub', ['build', 'compress']);
+  grunt.registerTask('pub', ['build', 'githash', 'compress']);
   grunt.registerTask('default', ['build', 'watch']);
 };
