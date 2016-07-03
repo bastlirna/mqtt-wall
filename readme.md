@@ -8,7 +8,9 @@
 
 ## Status
 
-[![Build Status](https://travis-ci.org/bastlirna/mqtt-wall.svg?branch=master)](https://travis-ci.org/bastlirna/mqtt-wall)
+[![Build Status](https://travis-ci.org/bastlirna/mqtt-wall.svg?branch=master)](https://travis-ci.org/bastlirna/mqtt-wall) 
+
+**[Last Build](http://jslab.net/pub/mqtt-wall/)**
 
 ## Main Goal
 
