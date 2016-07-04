@@ -42,7 +42,7 @@ class WallClient {
     static generateClientId() {
         var time = Date.now() % 1000;
         var rnd = Math.round(Math.random() * 1000);
-        return `wall-${time}-${rnd}`;
+        return `wall-${time*1000 + rnd}`;
     }
 
     subscribe (topic, fn) {
