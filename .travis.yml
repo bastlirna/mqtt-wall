@@ -8,4 +8,4 @@ env:
 before_install: npm install grunt-cli -g
 install: npm install
 before_script: grunt pub -v
-after_success: curl --ftp-create-dirs -T pub/wall-*.zip -u $FTP_USER:$FTP_PASSWORD ftp://jslab.net/wall--build-$TRAVIS_BUILD_NUMBER--$TRAVIS_COMMIT--$TRAVIS_BUILD_ID.zip
+after_success: curl --ftp-create-dirs -T pub/wall-*.zip -u $FTP_USER:$FTP_PASSWORD ftp://jslab.net/$TRAVIS_BRANCH--$TRAVIS_BUILD_NUMBER--$TRAVIS_COMMIT--$TRAVIS_BUILD_ID.zip
