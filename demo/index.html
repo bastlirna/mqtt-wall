@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>MQTT Wall</title>
+
+        <script type="text/javascript">
+
+        // Configuration of MQTT Wall
+        var config = {
+
+            // MQTT server to connect (must support websocket protocol)
+            server: {
+                host: "test.mosquitto.org", port: 8080, path: ""
+            },
+
+            // Default subscribed topic 
+            defaultTopic: "/#",
+
+            // Show counter for each topic
+            showCounter: true
+        };
+
+        </script>
+    </head>
+    <body>
+        <!-- Content -->
+        <div id="frame">
+
+            <div id="header">
+                <div id="topic-box">
+                    <input type="text" id="topic" value="" title="Topic to subscribe">
+                </div>
+            </div>
+
+            <div id="toast">
+                <!--
+                <div class="toast-item info">
+                    Information, huray
+                </div>
+                -->
+            </div>
+
+            <section class="messages">
+                
+                <article class="message">
+                    <header>
+                        <h2>/dotgrid/text</h2><span class="mark retain">R</span><span class="mark counter">123</span>
+                    </header>
+                    
+                    <p>1234</p>
+                </article>
+
+                <article class="message">
+                    <header>
+                        <h2>/dotgrid/text2/assdasda/sda</h2><span class="mark counter">8888</span>
+                    </header>
+                    
+                    <p>Nějaká hodně dlouhý<br>více řádkový<br>text</p>
+                </article>
+                
+            </section>
+
+            <div id="footer">
+                <p class="status">
+                    Client <code id="status-client" title="Client ID">?</code> is 
+                    <code id="status-state" class="connecting"><em>&bull;</em> <span>connecting...</span></code> to 
+                    <code id="status-host">?</code>
+                    <em>via</em> MQTT Wall 0.2.0 (<a href="https://github.com/bastlirna/mqtt-wall">github</a>).
+                </p>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+        <script type="text/javascript" src="wall.js"></script>
+    </body>
+</html>
