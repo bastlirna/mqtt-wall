@@ -18,7 +18,7 @@
 
 ## Usage
 
-1. Downalod MQTT wall package (stable version or latest build)
+1. Downalod MQTT wall package (**[stable version](https://github.com/bastlirna/mqtt-wall/releases)** or [latest build](http://jslab.net/pub/mqtt-wall/))
 2. In index.html file there is configuration, put there your broker connection (MQTT over websockets is required).
 
 ## History
