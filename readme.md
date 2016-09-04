@@ -16,6 +16,10 @@
 - Nice on big screen with huge font (overhead projector during lecture)
 - Just subscription of single topic (including wildcards ofcourse)
 
+## Demo
+
+You can try **[demo](http://bastlirna.github.io/mqtt-wall/demo/)** using Mosquitto test server (*test.mosquitto.org*).
+
 ## Usage
 
 1. Downalod MQTT wall package (**[stable version](https://github.com/bastlirna/mqtt-wall/releases)** or [latest build](http://jslab.net/pub/mqtt-wall/))
