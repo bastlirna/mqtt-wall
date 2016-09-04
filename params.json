@@ -1,0 +1,6 @@
+{
+  "name": "MQTT Wall",
+  "tagline": "Twitter wall for your MQTT broker",
+  "body": "## Eye Candy\r\n\r\n<p align=\"center\">\r\n<img src=\"https://raw.githubusercontent.com/bastlirna/mqtt-wall/master/doc/screenshot.png\" alt=\"MQTT Wall Screenshot\">\r\n</p>\r\n\r\n## Main Goal\r\n\r\n- Clean and simple design\r\n- Nice on big screen with huge font (overhead projector during lecture)\r\n- Just subscription of single topic (including wildcards ofcourse)\r\n\r\n## Usage\r\n\r\n1. Downalod MQTT wall package (**[stable version](https://github.com/bastlirna/mqtt-wall/releases)** or [latest build](http://jslab.net/pub/mqtt-wall/))\r\n2. In index.html file there is configuration, put there your broker connection (MQTT over websockets is required).\r\n\r\n## History\r\n\r\nThis project was created as demo for my talk about MQTT on conference [Linux Days 2015](https://www.linuxdays.cz/2015/en/). First version took me about one hour. Since then codebase was completely rewritten.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
