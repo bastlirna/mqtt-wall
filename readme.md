@@ -8,7 +8,7 @@
 
 ## Status
 
-[![Build Status](https://travis-ci.org/bastlirna/mqtt-wall.svg?branch=master)](https://travis-ci.org/bastlirna/mqtt-wall) [![Build list](https://img.shields.io/badge/build-list-lightgray.png)](http://jslab.net/pub/mqtt-wall/)
+[![Build Status](https://travis-ci.org/bastlirna/mqtt-wall.svg?branch=master)](https://travis-ci.org/bastlirna/mqtt-wall) [![Build list](https://img.shields.io/badge/build-list-lightgray.png)](http://jslab.net/pub/mqtt-wall/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7957e9f6394477cb5d1b13fc66b5561)](https://www.codacy.com/app/horcicaa/mqtt-wall?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bastlirna/mqtt-wall&amp;utm_campaign=Badge_Grade)
 
 ## Main Goal
 
