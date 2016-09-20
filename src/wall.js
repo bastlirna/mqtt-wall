@@ -167,7 +167,7 @@ class MessageLine {
         this.isRetained = retained;
 
         if (this.$counterMark) {
-            this.$counterMark.text(this.counter)
+            this.$counterMark.text(this.counter);
         }
         
         if (payload == "") 
@@ -202,7 +202,7 @@ class MessageContainer {
 
     update (topic, payload, retained) {
 
-        if (this.lines[topic] === undefined) {
+        if (!this.lines[topic]) {
             this.lines[topic] = new MessageLine(topic, this.$parent);
         }
 
@@ -231,7 +231,6 @@ class Footer {
 
 // --- Main -------------------------------------------------------------------
 
-
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
@@ -239,22 +238,6 @@ var footer = new Footer();
 footer.clientId = client.clientId;
 footer.host = client.toString();
 footer.state = 0;
-
-client.onConnected = () => {
-    load();
-    footer.state = 1;
-    UI.toast("Connected to host " + client.toString());
-};
-
-client.onError = (description, isFatal) => {
-    UI.toast(description, "error", isFatal);
-
-    if (isFatal) footer.state = 2;
-};
-
-client.onMessage = (topic, msg, retained) => {
-    messages.update(topic, msg, retained);
-};
 
 function load() {
     var topic = $("#topic").val();
@@ -267,14 +250,32 @@ function load() {
     messages.reset();
 }
 
+client.onConnected = () => {
+    load();
+    footer.state = 1;
+    UI.toast("Connected to host " + client.toString());
+};
+
+client.onError = (description, isFatal) => {
+    UI.toast(description, "error", isFatal);
+
+    if (isFatal) {
+        footer.state = 2;
+    }
+};
+
+client.onMessage = (topic, msg, retained) => {
+    messages.update(topic, msg, retained);
+};
+
 $("#topic").keypress(function(e) {
-    if(e.which == 13) {
+    if(e.which === 13) {
         load();
     }
 });
 
 // URL hash 
-if (location.hash != "") {
+if (location.hash !== "") {
     $("#topic").val(location.hash.substr(1));
 } else {
     $("#topic").val(config.defaultTopic);
