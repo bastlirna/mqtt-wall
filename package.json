@@ -18,7 +18,9 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-string-replace": "^1.0.0",
     "grunt-contrib-compress": "^1.0.0",
-    "grunt-githash": "^0.1.3"
+    "grunt-githash": "^0.1.3",
+    "babelify": "^7.3.0",
+    "grunt-browserify": "^5.0.0"
   },
   "dependencies": {}
 }

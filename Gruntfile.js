@@ -61,6 +61,7 @@ module.exports = function(grunt) {
     },    
 
     // compile babel JS files
+    /*
     babel: {
         options: {
             sourceMap: true,
@@ -71,6 +72,21 @@ module.exports = function(grunt) {
                 'dist/wall.js': 'src/wall.js'
             }
         }
+    },
+    */
+
+    browserify: {
+      dist: {
+        options: {
+          browserifyOptions: {
+                debug: true
+          },
+          transform: [["babelify", { presets: ["es2015"] }]]
+        },
+        files: {
+          'dist/wall.js': 'src/js/wall.js'
+        }
+      }
     },
 
     // publish package
@@ -98,7 +114,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: 'src/**/*.js',
-        tasks: ['babel']
+        tasks: ['browserify']
       },
       html: {
         files: 'src/**/*.html',
@@ -108,9 +124,9 @@ module.exports = function(grunt) {
 
   });
 
-grunt.loadNpmTasks('grunt-githash');
+  grunt.loadNpmTasks('grunt-githash');
 
-  grunt.registerTask('build', ['copy', 'less', 'babel', 'string-replace']);
+  grunt.registerTask('build', ['copy', 'less', 'browserify', 'string-replace']);
   grunt.registerTask('pub', ['build', 'githash', 'compress']);
   grunt.registerTask('default', ['build', 'watch']);
 };
