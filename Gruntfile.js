@@ -122,6 +122,21 @@ module.exports = function(grunt) {
       }
     },
 
+    // Browser Sync (including watch)
+    browserSync: {
+      dev: {
+        bsFiles: {
+          src : ['dist/**.css', 'dist/**.js', 'dist/*.html'] 
+        },
+        options: {
+          watchTask: true,
+          server: {
+              baseDir: "./dist"
+          }
+      }
+    }
+  }
+
   });
 
   grunt.loadNpmTasks('grunt-githash');
@@ -129,4 +144,5 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['copy', 'less', 'browserify', 'string-replace']);
   grunt.registerTask('pub', ['build', 'githash', 'compress']);
   grunt.registerTask('default', ['build', 'watch']);
+  grunt.registerTask('serve', ['build', 'browserSync', 'watch']);
 };
