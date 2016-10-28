@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   require('time-grunt')(grunt);
   require('jit-grunt')(grunt);
@@ -9,20 +9,27 @@ module.exports = function(grunt) {
 
     // get GIT hash 
     githash: {
-        main: {
-          options: {},
-        }
-      },
+      main: {
+        options: {},
+      }
+    },
 
     // copy static files
     copy: {
       main: {
         files: [
           {
-            expand: true, 
+            expand: true,
             cwd: 'src/',
-            src: '*.html', 
+            src: '*.html',
             dest: 'dist/'
+          },
+          {
+            expand: true,
+            cwd: 'src/style/',
+            src: ['favicon/**.png', 'favicon/**.ico', 'favicon/**.json', 'favicon/**.xml'],
+            flatten: true,
+            dest: 'dist/style/'
           }
         ]
       }
@@ -35,7 +42,7 @@ module.exports = function(grunt) {
           'dist/index.html': 'src/index.html',
         },
         options: {
-          replacements: [ 
+          replacements: [
             {
               pattern: '$VERSION$',
               replacement: '<%= pkg.version %>'
@@ -58,7 +65,7 @@ module.exports = function(grunt) {
           sourceMapRootpath: './'
         }
       }
-    },    
+    },
 
     // compile babel JS files
     /*
@@ -79,7 +86,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           browserifyOptions: {
-                debug: true
+            debug: true
           },
           transform: [["babelify", { presets: ["es2015"] }]]
         },
@@ -98,7 +105,7 @@ module.exports = function(grunt) {
         files: [
           {
             cwd: 'dist/',
-            src: ['**'], 
+            src: ['**'],
             dest: 'wall-<%= pkg.version %>/',
             expand: true
           }
@@ -118,7 +125,7 @@ module.exports = function(grunt) {
       },
       html: {
         files: 'src/**/*.html',
-        tasks: ['copy','string-replace']
+        tasks: ['copy', 'string-replace']
       }
     },
 
@@ -126,16 +133,16 @@ module.exports = function(grunt) {
     browserSync: {
       dev: {
         bsFiles: {
-          src : ['dist/**.css', 'dist/**.js', 'dist/*.html'] 
+          src: ['dist/**.css', 'dist/**.js', 'dist/*.html']
         },
         options: {
           watchTask: true,
           server: {
-              baseDir: "./dist"
+            baseDir: "./dist"
           }
+        }
       }
     }
-  }
 
   });
 

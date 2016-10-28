@@ -28,3 +28,9 @@ You can try **[demo](http://bastlirna.github.io/mqtt-wall/demo/)** using Mosquit
 ## History
 
 This project was created as demo for my talk about MQTT on conference [Linux Days 2015](https://www.linuxdays.cz/2015/en/). First version took me about one hour. Since then codebase was completely rewritten.
+
+## Favicon
+
+Modified icon *[Magnifier with dollar](http://www.flaticon.com/free-icon/magnifier-with-dollar_64654)* made by [Freepik](http://www.freepik.com) from [www.flaticon.com](http://www.flaticon.com), licensed by [CC 3.0 BY]([http://creativecommons.org/licenses/by/3.0/](http://creativecommons.org/licenses/by/3.0/ "Creative Commons BY 3.0").
+
+
