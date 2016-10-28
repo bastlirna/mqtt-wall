@@ -1,0 +1,1 @@
+http://www.flaticon.com/free-icon/magnifier-with-dollar_64654
