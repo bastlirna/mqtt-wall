@@ -154,6 +154,9 @@ export class MessageContainer {
     }
 }
 
+MessageContainer.SORT_APLHA = "Alphabetically";
+MessageContainer.SORT_CHRONO = "Chronologically";
+
 export class Footer {
 
     set clientId(value) {

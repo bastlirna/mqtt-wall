@@ -7,6 +7,8 @@ var client = new WallClient(config.server.host, config.server.port, config.serve
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
 
+messages.sort = config.alphabeticalSort ? MessageContainer.SORT_APLHA : MessageContainer.SORT_CHRONO;
+
 footer.clientId = client.clientId;
 footer.host = client.toString();
 footer.state = 0;
