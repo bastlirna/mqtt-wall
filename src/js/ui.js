@@ -172,3 +172,32 @@ export class Footer {
         $("#status-state span").text(text[value]);
     }
 }
+
+export class Menu {
+
+    constructor (button, container) {
+        this.$button = button;
+        this.$container = container;
+        this.isOpen = false;
+        this.init();
+    }
+
+    init () {
+        this.$button.on("click", () => setTimeout(() => this.open(), 0));
+
+        this.close();
+    }
+
+    open () {
+        this.$container.show();
+        $("body").one("click", () => this.close());
+        this.isOpen = true;
+    }
+
+    close() {
+        console.log("Close menu")
+        this.$container.hide();
+        this.isOpen = false;
+    }
+
+}

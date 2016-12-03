@@ -63,8 +63,64 @@ html, body{
     }
 
     #topic-box{
-        width: 100%; 
         box-sizing: border-box;
+        margin-right: 40px;
+    }
+
+    #menu-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: @header-color;
+        width: 40px;
+        cursor: pointer;
+
+        span {
+            display: block;
+            padding: 11px;
+            border: none;
+            font-size: 100%;
+            text-align: center;
+        } 
+
+        span:hover {
+            background-color: lighten(@header-color, 5%);
+        }
+    }
+
+    #menu {
+
+        position: absolute;
+        top: 40px;
+        right: 0;
+        width: 300px;
+        background-color: @header-color;
+
+        -webkit-box-shadow: 0px 0px 5px 0px @header-color;
+        -moz-box-shadow:    0px 0px 5px 0px @header-color;
+        box-shadow:         0px 0px 5px 0px @header-color;
+
+        ul {
+            padding: 6px 0;
+        }
+
+        li {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        li:hover {
+            background-color: lighten(@header-color, 5%)
+        }
+
+        li.separator {
+            overflow: hidden;
+            height: 1px;
+            padding: 0;
+            margin: 3px 1px;
+            border-top: solid 1px lighten(@header-color, 10%); 
+            cursor: default;
+        }
     }
 } 
 

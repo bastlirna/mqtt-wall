@@ -1,11 +1,12 @@
 import {WallClient} from './client.js';
-import {UI, MessageLine, MessageContainer, Footer} from "./ui.js";
+import {UI, MessageLine, MessageContainer, Footer, Menu} from "./ui.js";
 
 // --- Main -------------------------------------------------------------------
 
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
+var menu = new Menu($("#menu-btn"), $("#menu"));
 
 footer.clientId = client.clientId;
 footer.host = client.toString();

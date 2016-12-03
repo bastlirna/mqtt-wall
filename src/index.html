@@ -18,6 +18,8 @@
         <meta name="msapplication-config" content="style/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
 
+        <script src="https://use.fontawesome.com/494284769f.js"></script>
+
         <script type="text/javascript">
 
         // Configuration of MQTT Wall
@@ -25,11 +27,11 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                host: "test.mosquitto.org", port: 8080, path: ""
+                host: "mqtt.sh.cvut.cz", port: 80, path: "/mqtt"
             },
 
             // Default subscribed topic 
-            defaultTopic: "/#",
+            defaultTopic: "/test",
 
             // Show counter for each topic
             showCounter: true
@@ -42,9 +44,23 @@
         <div id="frame">
 
             <div id="header">
+                
                 <div id="topic-box">
                     <input type="text" id="topic" value="" title="Topic to subscribe">
                 </div>
+                
+                <div id="menu-btn">
+                    <span><i class="fa fa-bars" aria-hidden="true"></i></span>
+                </div>
+
+                <div id="menu">
+                    <ul>
+                        <li>Sort Alphabetically</li>
+                        <li class="separator"></li>
+                        <li>About</li>
+                    </ul>
+                </div>
+
             </div>
 
             <div id="toast">
