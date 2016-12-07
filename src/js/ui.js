@@ -1,3 +1,5 @@
+import {EventEmitter} from './utils.js';
+
 export var UI = {};
 
 UI.setTitle = function (topic) {
@@ -173,5 +175,75 @@ export class Footer {
 
         $("#status-state").removeClass().addClass(className[value]);
         $("#status-state span").text(text[value]);
+    }
+}
+
+export class Toolbar extends EventEmitter {
+
+    constructor (parent) {
+        super();
+        
+        this.$parent = parent;
+        this.$topic = parent.find("#topic");
+        
+        this.initEventHandlers();
+        this.initDefaultTopic();
+    }
+
+    initEventHandlers () {
+        let inhibitor = false;
+
+        this.$topic.keyup((e) => {
+            if(e.which === 13) { // ENTER
+                this.$topic.blur();
+            }  
+
+            if (e.keyCode === 27) { // ESC
+                inhibitor = true;
+                this.$topic.blur();
+            }
+        });
+
+        this.$topic.focus((e) => {
+            inhibitor = false;
+        });
+
+        this.$topic.blur((e) => {
+            if (inhibitor) {
+                this.updateUi(); // revert changes
+            } else {
+                this.inputChanged();
+            } 
+        });
+    }
+
+    inputChanged () {
+        this._topic = this.$topic.val();
+        this.emit("topic", this._topic);
+    } 
+
+    initDefaultTopic () {
+        // URL hash 
+        if (location.hash !== "") {
+            this._topic = location.hash.substr(1);
+        } else {
+            this._topic = config.defaultTopic || "/#";
+        }
+
+        this.updateUi();
+    }
+
+    updateUi () {
+        this.$topic.val(this._topic);
+    }
+
+    get topic () {
+        return this._topic;
+    }
+
+    set topic (value) {
+        this._topic = value;
+        this.updateUi();
+        this.emit("topic", value);
     }
 }

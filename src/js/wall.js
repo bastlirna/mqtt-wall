@@ -1,11 +1,12 @@
 import {WallClient} from './client.js';
-import {UI, MessageLine, MessageContainer, Footer} from "./ui.js";
+import {UI, MessageLine, MessageContainer, Footer, Toolbar} from "./ui.js";
 
 // --- Main -------------------------------------------------------------------
 
 var client = new WallClient(config.server.host, config.server.port, config.server.path);
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
+var toolbar = new Toolbar($("#header"));
 
 messages.sort = config.alphabeticalSort ? MessageContainer.SORT_APLHA : MessageContainer.SORT_CHRONO;
 
@@ -14,7 +15,7 @@ footer.host = client.toString();
 footer.state = 0;
 
 function load() {
-    var topic = $("#topic").val();
+    let topic = toolbar.topic;
 
     client.subscribe(topic, function () {
         UI.setTitle(topic);
@@ -23,6 +24,10 @@ function load() {
 
     messages.reset();
 }
+
+toolbar.on("topic", () => {
+    load();
+});
 
 client.onConnected = () => {
     load();
@@ -41,16 +46,3 @@ client.onError = (description, isFatal) => {
 client.onMessage = (topic, msg, retained) => {
     messages.update(topic, msg, retained);
 };
-
-$("#topic").keypress(function(e) {
-    if(e.which === 13) {
-        load();
-    }
-});
-
-// URL hash 
-if (location.hash !== "") {
-    $("#topic").val(location.hash.substr(1));
-} else {
-    $("#topic").val(config.defaultTopic);
-}
