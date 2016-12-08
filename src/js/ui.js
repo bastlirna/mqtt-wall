@@ -218,8 +218,14 @@ export class Toolbar extends EventEmitter {
     }
 
     inputChanged () {
-        this._topic = this.$topic.val();
-        this.emit("topic", this._topic);
+        var newTopic = this.$topic.val(); 
+
+        if (newTopic === this._topic) {
+            return;
+        }
+
+        this._topic = newTopic;
+        this.emit("topic", newTopic);
     } 
 
     initDefaultTopic () {
