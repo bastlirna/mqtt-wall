@@ -2,13 +2,13 @@ var mosca = require('mosca');
  
 var startTime = new Date();
 
+var autoKickOff = true;
+
 var settings = {
     id: 'broker',
     stats: true,
     port: 1883,
-
     persistence: { factory: mosca.persistence.Memory },
-
     http: {
         port: 3000,
         bundle: true,
@@ -20,6 +20,13 @@ var server = new mosca.Server(settings);
  
 server.on('clientConnected', function(client) {
     console.log('CON %s', client.id);
+
+    if (autoKickOff) {
+        setTimeout(() => {
+            console.log("KICK client %s", client.id);
+            client.close();
+        }, 5000 + Math.random() * 10000);
+    }
 });
  
 // fired when a message is received 
@@ -41,6 +48,13 @@ function pub (topic, msg, retain) {
     server.publish(packet);
 }
 
+function kickOff () {
+    console.log("Kick Off");
+    server.clients.forEach( (c) => {
+        c.close();
+    });
+}
+
 // fired when the mqtt server is ready 
 function setup() {
     console.log('Mosca server is up and running');
@@ -60,5 +74,6 @@ function setup() {
     setInterval(() => {
         pub("/rnd", Math.round(Math.random() * 100));
     }, 5000 * Math.random() + 1000);
-}
 
+    //setInterval(kickOff, 10000);
+}
