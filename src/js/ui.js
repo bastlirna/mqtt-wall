@@ -170,11 +170,17 @@ export class Footer {
     }
 
     set state(value) {
-        var className = ["connecting", "connected", "fail"];
-        var text = ["connecting...", "connected", "not connected"];
+        var classNames = ["connecting", "connected", "connecting", "fail"];
+        var texts = ["connecting...", "connected", "reconnecting...", "not connected"];
 
-        $("#status-state").removeClass().addClass(className[value]);
-        $("#status-state span").text(text[value]);
+        var text = texts[value - 1];
+
+        if (this.reconnectAttempts > 1) {
+            text += ` (${this.reconnectAttempts})`;
+        }
+
+        $("#status-state").removeClass().addClass(classNames[value - 1]);
+        $("#status-state span").text(text);
     }
 }
 
