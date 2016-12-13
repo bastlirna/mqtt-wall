@@ -1,4 +1,5 @@
 import {EventEmitter} from './utils.js';
+import {WallClient} from './client.js';
 
 export var UI = {};
 
@@ -170,16 +171,38 @@ export class Footer {
     }
 
     set state(value) {
-        var classNames = ["connecting", "connected", "connecting", "fail"];
-        var texts = ["connecting...", "connected", "reconnecting...", "not connected"];
+        let text, className;
 
-        var text = texts[value - 1];
+        switch (value) {
+            case WallClient.STATE.NEW:
+                text = "";
+                className = "connecting";
+                break;
+            case WallClient.STATE.CONNECTING:
+                text = "connecting...";
+                className = "connecting";
+                break;
+            case WallClient.STATE.CONNECTED:
+                text = "connected";
+                className = "connected";
+                break;
+            case WallClient.STATE.RECONNECTING:
+                text = "reconnecting...";
+                className = "connecting";
+                break;
+            case WallClient.STATE.ERROR:
+                text = "not connected";
+                className = "fail";
+                break;
+            default:
+                throw new Error("Unknown WallClient.STATE")
+        }
 
         if (this.reconnectAttempts > 1) {
             text += ` (${this.reconnectAttempts})`;
         }
 
-        $("#status-state").removeClass().addClass(classNames[value - 1]);
+        $("#status-state").removeClass().addClass(className);
         $("#status-state span").text(text);
     }
 }

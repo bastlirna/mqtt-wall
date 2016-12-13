@@ -32,7 +32,7 @@ export class WallClient {
 
         this.firstConnection = true;
         this.attempts = 0;
-        this._setState(WallClient.STATE.UNKNOWN);
+        this._setState(WallClient.STATE.NEW);
     }
 
     static generateClientId() {
@@ -167,7 +167,7 @@ export class WallClient {
 }
 
 WallClient.STATE = {
-    UNKNOWN: 0,
+    NEW: 0,
     CONNECTING: 1,
     CONNECTED: 2,
     RECONNECTING: 3,

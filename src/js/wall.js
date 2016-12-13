@@ -31,21 +31,14 @@ toolbar.on("topic", () => {
 
 client.onConnected = () => {
     load();
-    //footer.state = 1;
     UI.toast("Connected to host " + client.toString());
 };
 
 client.onError = (description, isFatal) => {
     UI.toast(description, "error", isFatal);
-
-    if (isFatal) {
-        //footer.state = 4;
-    }
 };
 
 client.onStateChanged = (state) => {
-    console.log("state: %s", state);
-
     footer.reconnectAttempts = client.attempts;
     footer.state = state;
 }
