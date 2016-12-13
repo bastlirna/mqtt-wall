@@ -16,7 +16,7 @@ export class WallClient {
             console.info("Connection lost ", error);
             
             if (WallClient.isNetworkError(error.errorCode)){
-                this._reconect();
+                this._reconnect();
                 return;
             }
 
@@ -115,7 +115,7 @@ export class WallClient {
                 console.error("Connect fail ", error);
                 
                 if (WallClient.isNetworkError(error.errorCode)){
-                    this._reconect();
+                    this._reconnect();
                     return;
                 }
                 
@@ -128,7 +128,7 @@ export class WallClient {
         this.client.connect(connectOptions);
     }
 
-    _reconect () {
+    _reconnect () {
 
         this.attempts ++;
         this._setState(WallClient.STATE.RECONNECTING);

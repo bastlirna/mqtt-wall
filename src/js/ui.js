@@ -8,22 +8,43 @@ UI.setTitle = function (topic) {
 };
  
 UI.toast = function (message, type = "info", persistent = false) {
-    var toast = $("<div class='toast-item'>")
-        .text(message)
-        .addClass(type)
-        .hide()
-        .appendTo("#toast")
-        .fadeIn();
-
-    if (persistent != true) {
-        toast.delay(5000).slideUp().queue(function () { this.remove(); });
-    } else {
-        $("<span> – <a href='javascript:;'>reload</a></span>")
-            .find("a").click(function () { location.reload(); }).end()
-            .appendTo(toast);
-    }
+    return new Toast(message, type, persistent);
 };
 
+class Toast {
+
+    constructor (message, type = "info", persistent = false) {
+
+        this.$root = $("<div class='toast-item'>")
+            .text(message)
+            .addClass(type)
+            .hide()
+            .appendTo("#toast")
+            .fadeIn();
+
+        if (persistent != true) {
+            setTimeout(() => { this.hide(); }, 5000);
+        } else {
+            $("<span> – <a href='javascript:;'>reload</a></span>")
+                .find("a").click(function () { location.reload(); }).end()
+                .appendTo(this.$root);
+            
+            this.$root.addClass("persistent");
+        }
+    }
+
+    hide () {
+        this.$root.slideUp().queue(() => { this.remove(); });
+    }
+
+    remove () {
+        this.$root.remove();
+    }
+
+    setMessage (message) {
+        this.$root.text(message);
+    }
+}
 
 export class MessageLine {
 

@@ -38,9 +38,27 @@ client.onError = (description, isFatal) => {
     UI.toast(description, "error", isFatal);
 };
 
+let reconnectingToast = null;
+
 client.onStateChanged = (state) => {
     footer.reconnectAttempts = client.attempts;
     footer.state = state;
+
+    if (state === WallClient.STATE.RECONNECTING && client.attempts >= 2) {
+        var msg = `Connection lost. reconnecting... (${client.attempts})`;
+
+        if (reconnectingToast === null){
+            reconnectingToast = UI.toast(msg, "error", true);
+        } else {
+            reconnectingToast.setMessage(msg);
+        }
+    }
+
+    if (state === WallClient.STATE.CONNECTED && reconnectingToast !== null) {
+        reconnectingToast.hide();
+        UI.toast("Reconnected");
+        reconnectingToast = null;
+    }
 }
 
 client.onMessage = (topic, msg, retained) => {
