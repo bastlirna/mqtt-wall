@@ -10,7 +10,7 @@ var settings = {
     port: 1883,
     persistence: { factory: mosca.persistence.Memory },
     http: {
-        port: 3000,
+        port: 8080,
         bundle: true,
         static: './'
     }
