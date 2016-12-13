@@ -44,8 +44,10 @@ client.onStateChanged = (state) => {
     footer.reconnectAttempts = client.attempts;
     footer.state = state;
 
-    if (state === WallClient.STATE.RECONNECTING && client.attempts >= 2) {
-        var msg = `Connection lost. reconnecting... (${client.attempts})`;
+    if ((state === WallClient.STATE.CONNECTING || state === WallClient.STATE.RECONNECTING) && client.attempts >= 2) {
+        var msg = state === WallClient.STATE.CONNECTING ?
+            `Fail to connect. Trying to connect... (${client.attempts} attempts)`:
+            `Connection lost. Trying to reconnect... (${client.attempts} attempts)`;
 
         if (reconnectingToast === null){
             reconnectingToast = UI.toast(msg, "error", true);
@@ -56,8 +58,11 @@ client.onStateChanged = (state) => {
 
     if (state === WallClient.STATE.CONNECTED && reconnectingToast !== null) {
         reconnectingToast.hide();
-        UI.toast("Reconnected");
         reconnectingToast = null;
+
+        if (client.firstConnection == false) {
+            UI.toast("Reconnected");
+        }
     }
 }
 

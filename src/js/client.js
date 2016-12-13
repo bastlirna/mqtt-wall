@@ -131,13 +131,10 @@ export class WallClient {
     _reconnect () {
 
         this.attempts ++;
-        this._setState(WallClient.STATE.RECONNECTING);
+        this._setState(this.firstConnection ? WallClient.STATE.CONNECTING : WallClient.STATE.RECONNECTING);
 
-        let t = (this.attempts-1) * 5000;
-
-        t = Math.max(Math.min(t, 30000), 1000);
-
-        console.log("T: %s", t);
+        let t = (this.attempts-1) * 2000;
+        t = Math.max(Math.min(t, 30000), 100);
 
         setTimeout(() => {
             this.connect();

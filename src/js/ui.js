@@ -22,14 +22,10 @@ class Toast {
             .appendTo("#toast")
             .fadeIn();
 
-        if (persistent != true) {
-            setTimeout(() => { this.hide(); }, 5000);
-        } else {
-            $("<span> – <a href='javascript:;'>reload</a></span>")
-                .find("a").click(function () { location.reload(); }).end()
-                .appendTo(this.$root);
-            
+        if (persistent) {
             this.$root.addClass("persistent");
+        } else {
+            setTimeout(() => { this.hide(); }, 5000);
         }
     }
 
