@@ -68,6 +68,9 @@ export class MessageLine {
         this.$retainMark = $("<span class='mark retain' title='Retain message'>R</span>")
             .appendTo(header);
 
+        this.$qosMark = $("<span class='mark qos' title='Received message QoS'>QoS</span>")
+            .appendTo(header);
+
         this.$payload = $("<p>").appendTo(this.$root);
     }
 
@@ -86,7 +89,7 @@ export class MessageLine {
             .animate({backgroundColor: "#fff"}, 2000);
     }
 
-    update(payload, retained) {
+    update(payload, retained, qos) {
         this.counter ++;
         this.isRetained = retained;
 
@@ -94,6 +97,16 @@ export class MessageLine {
             this.$counterMark.text(this.counter);
         }
         
+        if (this.$qosMark) {
+            if (qos == 0) {
+                this.$qosMark.hide();
+            } else {
+                this.$qosMark.show();
+                this.$qosMark.text(`QoS ${qos}`);
+                this.$qosMark.attr("data-qos", qos);
+            }
+        }
+
         if (payload == "") 
         {
             payload = "NULL";
@@ -131,7 +144,7 @@ export class MessageContainer {
         this.$parent.html("");
     }
 
-    update (topic, payload, retained) {
+    update (topic, payload, retained, qos) {
 
         if (!this.lines[topic]) {
 
@@ -141,7 +154,7 @@ export class MessageContainer {
             this.lines[topic] = line;
         }
 
-        this.lines[topic].update(payload, retained);
+        this.lines[topic].update(payload, retained, qos);
     }
 
     addLineAlphabetically (line) {

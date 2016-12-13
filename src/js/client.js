@@ -1,7 +1,8 @@
 export class WallClient {
 
-    constructor(host, port, path) {
+    constructor(host, port, path, qos = 0) {
         
+        this.qos = qos;
         this.clientId = WallClient.generateClientId();
         
         // paho documentation: http://www.eclipse.org/paho/files/jsdoc/index.html
@@ -9,7 +10,7 @@ export class WallClient {
         
         this.client.onMessageArrived = (message) => {
             //console.log("Message arrived ", message);
-            this.onMessage(message.destinationName, message.payloadString, message.retained);
+            this.onMessage(message.destinationName, message.payloadString, message.retained, message.qos);
         };
 
         this.client.onConnectionLost = (error) => {
@@ -78,6 +79,7 @@ export class WallClient {
     
         // subscribe new topic
         this.client.subscribe(topic, {
+            qos: this.qos,
             onSuccess: (r) => {
                 console.info("Subscribe '%s' success", topic, r);
                 if (fn) {

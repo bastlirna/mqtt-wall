@@ -3,7 +3,7 @@ import {UI, MessageLine, MessageContainer, Footer, Toolbar} from "./ui.js";
 
 // --- Main -------------------------------------------------------------------
 
-var client = new WallClient(config.server.host, config.server.port, config.server.path);
+var client = new WallClient(config.server.host, config.server.port, config.server.path,  config.qos);
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
 var toolbar = new Toolbar($("#header"));
@@ -66,8 +66,8 @@ client.onStateChanged = (state) => {
     }
 }
 
-client.onMessage = (topic, msg, retained) => {
-    messages.update(topic, msg, retained);
+client.onMessage = (topic, msg, retained, qos) => {
+    messages.update(topic, msg, retained, qos);
 };
 
 client.connect();
