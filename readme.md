@@ -14,7 +14,7 @@
 
 - Clean and simple design
 - Nice on big screen with huge font (overhead projector during lecture)
-- Just subscription of single topic (including wildcards ofcourse)
+- Just subscription of single topic (including wild cards of course)
 
 ## Demo
 
@@ -22,14 +22,42 @@ You can try **[demo](http://bastlirna.github.io/mqtt-wall/demo/)** using Mosquit
 
 ## Usage
 
-1. Downalod MQTT wall package (**[stable version](https://github.com/bastlirna/mqtt-wall/releases)** or [latest build](http://jslab.net/pub/mqtt-wall/))
+1. Download MQTT wall package (**[stable version](https://github.com/bastlirna/mqtt-wall/releases)** or [latest build](http://jslab.net/pub/mqtt-wall/))
 2. In index.html file there is configuration, put there your broker connection (MQTT over websockets is required).
 
 ## History
 
-This project was created as demo for my talk about MQTT on conference [Linux Days 2015](https://www.linuxdays.cz/2015/en/). First version took me about one hour. Since then codebase was completely rewritten.
+This project was created as demo for my talk about MQTT on conference [Linux Days 2015](https://www.linuxdays.cz/2015/en/). First version took me about one hour. Since then code base was completely rewritten.
+
+## Develop
+
+You will need git, node.js, npm and grunt.
+
+1) Clone repository
+
+
+	git clone https://github.com/bastlirna/mqtt-wall.git
+	cd mqtt-wall
+
+2) Install dev. dependencies
+
+	npm install
+
+3) Build source code and run dev. http server (http://localhost:3000/)
+
+	grunt serve 
+
+Alternatively you can run `grunt build` to build source code (new directory `dist` will show up) or run `grunt watch` that will stay running and build src. whenever source code changed. `grunt server` does both and additionally serve result via [BrowserSync](https://browsersync.io/).
+
+If you need dev. MQTT broker, go to
+
+	cd tools/test-broker
+	npm install
+	node test-broker.js
 
 ## Favicon
+
+<img src="https://raw.githubusercontent.com/bastlirna/mqtt-wall/master/src/style/favicon/android-chrome-192x192.png" alt="MQTT Wall Icon" align="left" style="margin: 5px 15px 5px 5px" width="64" height="64">
 
 Modified icon *[Magnifier with dollar](http://www.flaticon.com/free-icon/magnifier-with-dollar_64654)* made by [Freepik](http://www.freepik.com) from [www.flaticon.com](http://www.flaticon.com), licensed by [CC 3.0 BY]([http://creativecommons.org/licenses/by/3.0/](http://creativecommons.org/licenses/by/3.0/ "Creative Commons BY 3.0").
 
