@@ -55,25 +55,36 @@ function kickOff () {
     });
 }
 
+function rndPub(topic, min, max, fn) {
+
+    function t () {
+        return (max - min) * Math.random() + min;
+    }
+
+    function send() {
+        pub(topic, fn());
+        setTimeout(send, t());
+    }
+
+    setTimeout(send, t());
+}
+
 // fired when the mqtt server is ready 
 function setup() {
     console.log('Mosca server is up and running');
-
     var c = 0;
 
-    pub("/start-time", startTime.toString(), true);
+    // general topics
+    rndPub("/start-time", 500, 1000, () => startTime.toString());
+    rndPub("/uptime", 500, 1000, () => Math.round((Date.now() - startTime) / 1000));
+    rndPub("/counter", 500, 1000, () => c++);
+    rndPub("/rnd", 1000, 2000, () => Math.round(Math.random() * 100));
 
-    setInterval(() => {
-        pub("/counter", c++);
-    }, 2000 * Math.random() + 300);
+    // text
+    rndPub("/text/short", 1000, 5000, () => "Lorem ipsum");
+    rndPub("/text/long", 1000, 5000, () => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum elementum mollis ultrices. Curabitur eget libero sodales ligula mollis hendrerit at nec urna. Sed faucibus eget metus vel euismod. Nullam convallis arcu id diam facilisis, sit amet laoreet odio laoreet. Nulla tortor orci, posuere nec dapibus ac, rutrum et dolor. Cras sagittis a sapien at elementum. Etiam imperdiet justo et odio pulvinar, in ornare leo vestibulum. Ut at augue dolor. Donec vestibulum magna id pulvinar dictum. Proin magna augue, imperdiet tristique pretium ut, condimentum vel massa. Ut condimentum velit a cursus efficitur. Duis quis lobortis nisi. Praesent eu enim eget sapien malesuada ultrices. Cras quis ultrices metus. ");
 
-    setInterval(() => {
-        pub("/uptime", Math.round((Date.now() - startTime) / 1000));
-    }, 1000);
-
-    setInterval(() => {
-        pub("/rnd", Math.round(Math.random() * 100));
-    }, 5000 * Math.random() + 1000);
-
-    //setInterval(kickOff, 10000);
+    rndPub("/json/short-array", 1000, 5000, () => JSON.stringify(["aaa", "bbb", 42]));
+    rndPub("/json/short-object", 1000, 5000, () => JSON.stringify({aaa: "abc", bbb: 42}));
+    rndPub("/json/long-object", 1000, 5000, () => JSON.stringify({"payload":"MyAAMDE4AAA=","fields":{"payload":{"light":3,"temp":18},"text":"3 018 "},"port":127,"counter":28,"dev_eui":"000000008E69B242","metadata":[{"frequency":868.3,"datarate":"SF12BW125","codingrate":"4/5","gateway_timestamp":3420668252,"channel":1,"server_time":"2016-11-28T17:22:39.21518015Z","rssi":-115,"lsnr":-9.2,"rfchain":1,"crc":1,"modulation":"LORA","gateway_eui":"0000024B080E0539","altitude":221,"longitude":14.42204,"latitude":50.08947},{"frequency":868.3,"datarate":"SF12BW125","codingrate":"4/5","gateway_timestamp":401542396,"channel":1,"server_time":"2016-11-28T17:22:39.385729404Z","rssi":-119,"lsnr":-18.5,"rfchain":1,"crc":1,"modulation":"LORA","gateway_eui":"1DEE148A60342739","altitude":260,"longitude":14.3962,"latitude":50.08835}]}));
 }
