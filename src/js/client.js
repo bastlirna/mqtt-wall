@@ -1,7 +1,9 @@
 export class WallClient {
 
-    constructor(uri, qos = 0) {
+    constructor(uri, username, password, qos = 0) {
         
+        this.username = username;
+        this.password = password;
         this.qos = qos;
         this.clientId = WallClient.generateClientId();
         
@@ -124,6 +126,11 @@ export class WallClient {
                 this.onError("Fail to connect", true);
             }
         };
+
+        if (this.username && this.password) {
+            connectOptions.userName = this.username;
+            connectOptions.password = this.password;
+        }
 
         this._setState(this.firstConnection ? WallClient.STATE.CONNECTING : WallClient.STATE.RECONNECTING)
 

@@ -3,10 +3,13 @@ import {UI, MessageLine, MessageContainer, Footer, Toolbar} from "./ui.js";
 
 // --- Main -------------------------------------------------------------------
 
-var client = new WallClient(config.server.uri, config.qos);
-var messages = new MessageContainer($("section.messages"));
-var footer = new Footer();
-var toolbar = new Toolbar($("#header"));
+// decode password base64 (if empty leve it)
+let password = config.server.password !== undefined ? atob(config.server.password) : undefined;
+
+let client = new WallClient(config.server.uri, config.server.username, password, config.qos);
+let messages = new MessageContainer($("section.messages"));
+let footer = new Footer();
+let toolbar = new Toolbar($("#header"));
 
 messages.sort = config.alphabeticalSort ? MessageContainer.SORT_APLHA : MessageContainer.SORT_CHRONO;
 
@@ -45,7 +48,7 @@ client.onStateChanged = (state) => {
     footer.state = state;
 
     if ((state === WallClient.STATE.CONNECTING || state === WallClient.STATE.RECONNECTING) && client.attempts >= 2) {
-        var msg = state === WallClient.STATE.CONNECTING ?
+        let msg = state === WallClient.STATE.CONNECTING ?
             `Fail to connect. Trying to connect... (${client.attempts} attempts)`:
             `Connection lost. Trying to reconnect... (${client.attempts} attempts)`;
 
