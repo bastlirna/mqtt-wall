@@ -1,12 +1,12 @@
 export class WallClient {
 
-    constructor(host, port, path, qos = 0) {
+    constructor(uri, qos = 0) {
         
         this.qos = qos;
         this.clientId = WallClient.generateClientId();
         
         // paho documentation: http://www.eclipse.org/paho/files/jsdoc/index.html
-        this.client = new Paho.MQTT.Client(host, port, path, this.clientId);
+        this.client = new Paho.MQTT.Client(uri, this.clientId);
         
         this.client.onMessageArrived = (message) => {
             //console.log("Message arrived ", message);
@@ -98,10 +98,10 @@ export class WallClient {
     connect () {
 
         let connectOptions = {
-            
+
             onSuccess : () => {
                 console.info("Connect success");
-                
+
                 this.attempts = 0;
                 this._setState(WallClient.STATE.CONNECTED);
                 
@@ -151,17 +151,9 @@ export class WallClient {
     }
 
     toString () {
-        let str = this.client.host;
-
-        if (this.client.port != 80) {
-            str += ":" + this.client.port;
-        }
-
-        if (this.client.path != "") {
-            str += "" + this.client.path;
-        } 
-
-        return str;
+        // _getURI is undocumented function (it is URI used for underlying WebSocket connection)
+        // see https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/mqttws31.js#L1622
+        return this.client._getURI();
     }
 }
 

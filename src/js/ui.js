@@ -196,8 +196,8 @@ export class Footer {
         $("#status-client").text(value);
     }
 
-    set host(value) {
-        $("#status-host").text("ws://" + value);
+    set uri(value) {
+        $("#status-host").text(value);
     }
 
     set state(value) {

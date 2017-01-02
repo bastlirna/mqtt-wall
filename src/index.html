@@ -25,7 +25,11 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                host: "localhost", port: 8080, path: "/"
+                // Full URI of server (include protocol ws:// or wss:// for secure connection) and path ("/" is required if path is empty)
+                // Examples for http://test.mosquitto.org/:
+                //   - insecure connection:  "ws://test.mosquitto.org:8080/"
+                //   - secure connection:    "wss://test.mosquitto.org:8081/"
+                uri: "ws://localhost:8080/"
             },
 
             // Default subscribed topic 

@@ -3,7 +3,7 @@ import {UI, MessageLine, MessageContainer, Footer, Toolbar} from "./ui.js";
 
 // --- Main -------------------------------------------------------------------
 
-var client = new WallClient(config.server.host, config.server.port, config.server.path,  config.qos);
+var client = new WallClient(config.server.uri, config.qos);
 var messages = new MessageContainer($("section.messages"));
 var footer = new Footer();
 var toolbar = new Toolbar($("#header"));
@@ -11,7 +11,7 @@ var toolbar = new Toolbar($("#header"));
 messages.sort = config.alphabeticalSort ? MessageContainer.SORT_APLHA : MessageContainer.SORT_CHRONO;
 
 footer.clientId = client.clientId;
-footer.host = client.toString();
+footer.uri = client.toString();
 footer.state = 0;
 
 function load() {
