@@ -4,6 +4,11 @@ var startTime = new Date();
 
 var autoKickOff = true;
 
+var requiredAuthenticate = false;
+
+var username = "test";
+var password = "pass";
+
 var settings = {
     id: 'broker',
     stats: true,
@@ -31,10 +36,23 @@ server.on('clientConnected', function(client) {
  
 // fired when a message is received 
 server.on('published', function(packet, client) {
-    console.log('PUB %s "%s"', packet.topic, packet.payload);
+    //console.log('PUB %s "%s"', packet.topic, packet.payload);
 });
  
 server.on('ready', setup);
+
+server.authenticate = function (client, u, p, cb) {
+    console.log("Authenticate %s, %s, %s", client.id, u, p);
+    var result = false;
+
+    if (requiredAuthenticate) {
+        result = username == u && password == p;
+    } else {
+        result = true;
+    }
+
+    setTimeout(function () { cb(null, result); }, 0);
+}
 
 // ---
 
