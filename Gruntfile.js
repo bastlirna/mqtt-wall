@@ -170,7 +170,12 @@ module.exports = function (grunt) {
           }
         }
       }
-    }
+    },
+    
+    // clean up dist dir
+    clean: {
+      dist: ['dist/']
+		}
 
   });
 
