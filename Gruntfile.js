@@ -14,6 +14,23 @@ module.exports = function (grunt) {
       }
     },
 
+    // minify js file
+    uglify: {
+      options: {
+        mangle: {
+          except: ['$', 'jQuery', 'config']
+        },
+        ASCIIOnly: true,
+        report: 'min',
+        beautify: false,
+        compress: true
+      },
+      build: {
+        src: 'dist/wall.js',
+        dest: 'dist/wall.js'
+      }
+    },
+
     // copy static files
     copy: {
       main: {
@@ -60,10 +77,21 @@ module.exports = function (grunt) {
         },
         options: {
           sourceMap: true,
-          sourceMapFilename: 'dist/style.css.map',
-          sourceMapURL: 'style.css.map',
-          sourceMapRootpath: './'
+          sourceMapFileInline: true
         }
+      }
+    },
+    
+    // minify css file
+    postcss: {
+      options: {
+        processors: [
+          require('cssnano')() // minify the result
+        ]
+      },
+      style: {
+        src: 'dist/style.css',
+        dest: 'dist/style.css'
       }
     },
 
@@ -142,14 +170,20 @@ module.exports = function (grunt) {
           }
         }
       }
-    }
+    },
+    
+    // clean up dist dir
+    clean: {
+      dist: ['dist/']
+		}
 
   });
 
   grunt.loadNpmTasks('grunt-githash');
 
   grunt.registerTask('build', ['copy', 'less', 'browserify', 'string-replace']);
-  grunt.registerTask('pub', ['build', 'githash', 'compress']);
+  grunt.registerTask('dist', ['build', 'uglify', 'postcss']);
+  grunt.registerTask('pub', ['dist', 'githash', 'compress']);
   grunt.registerTask('default', ['build', 'watch']);
   grunt.registerTask('serve', ['build', 'browserSync', 'watch']);
 };
