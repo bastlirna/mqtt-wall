@@ -35,25 +35,32 @@ You will need git, node.js, npm and grunt.
 
 1) Clone repository
 
-
-	git clone https://github.com/bastlirna/mqtt-wall.git
-	cd mqtt-wall
+```
+git clone https://github.com/bastlirna/mqtt-wall.git
+cd mqtt-wall
+```
 
 2) Install dev. dependencies
 
-	npm install
+```
+npm install
+```
 
 3) Build source code and run dev. http server (http://localhost:3000/)
 
-	grunt serve 
+```
+grunt serve
+```
 
 Alternatively you can run `grunt build` to build source code (new directory `dist` will show up) or run `grunt watch` that will stay running and build src. whenever source code changed. `grunt server` does both and additionally serve result via [BrowserSync](https://browsersync.io/).
 
 If you need dev. MQTT broker, go to
 
-	cd tools/test-broker
-	npm install
-	node test-broker.js
+```
+cd tools/test-broker
+npm install
+node test-broker.js
+```
 
 ## Favicon
 
