@@ -2,7 +2,7 @@ var mosca = require('mosca');
  
 var startTime = new Date();
 
-var autoKickOff = true;
+var autoKickOff = false;
 
 var requiredAuthenticate = false;
 
@@ -57,12 +57,18 @@ server.authenticate = function (client, u, p, cb) {
 // ---
 
 function pub (topic, msg, retain) {
+
+    if (msg instanceof Buffer === false){
+        msg = msg.toString();
+    }
+
     var packet = {
         topic: topic,
-        payload: msg.toString(),
+        payload: msg,
         qos: 0,
         retain: retain || false
     };
+
     server.publish(packet);
 }
 
@@ -105,4 +111,7 @@ function setup() {
     rndPub("/json/short-array", 1000, 5000, () => JSON.stringify(["aaa", "bbb", 42]));
     rndPub("/json/short-object", 1000, 5000, () => JSON.stringify({aaa: "abc", bbb: 42}));
     rndPub("/json/long-object", 1000, 5000, () => JSON.stringify({"payload":"MyAAMDE4AAA=","fields":{"payload":{"light":3,"temp":18},"text":"3 018 "},"port":127,"counter":28,"dev_eui":"000000008E69B242","metadata":[{"frequency":868.3,"datarate":"SF12BW125","codingrate":"4/5","gateway_timestamp":3420668252,"channel":1,"server_time":"2016-11-28T17:22:39.21518015Z","rssi":-115,"lsnr":-9.2,"rfchain":1,"crc":1,"modulation":"LORA","gateway_eui":"0000024B080E0539","altitude":221,"longitude":14.42204,"latitude":50.08947},{"frequency":868.3,"datarate":"SF12BW125","codingrate":"4/5","gateway_timestamp":401542396,"channel":1,"server_time":"2016-11-28T17:22:39.385729404Z","rssi":-119,"lsnr":-18.5,"rfchain":1,"crc":1,"modulation":"LORA","gateway_eui":"1DEE148A60342739","altitude":260,"longitude":14.3962,"latitude":50.08835}]}));
+
+    // non UTF-8 data
+    rndPub("/binary/non-utf", 1000, 5000, () => Buffer.from("AAAAABS2/j8g/P4/MOj7lhrg/j9Rni4vIPz+P7VIIUBw8v4/BOD+P8Dc/z+guP4/QAAAAHDy/j8AAAAAQBL/P3NCIUCw2v8/AAAAACMrIECguP4/SQ8AQLDa/z9JDwBA", "base64"))
 }

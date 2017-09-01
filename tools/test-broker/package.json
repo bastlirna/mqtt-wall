@@ -6,6 +6,6 @@
   "scripts": {},
   "devDependencies": {},
   "dependencies": {
-    "mosca": "^2.2.0"
+    "mosca": "^2.5.2"
   }
 }
