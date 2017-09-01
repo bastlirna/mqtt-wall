@@ -11,8 +11,18 @@ export class WallClient {
         this.client = new Paho.MQTT.Client(uri, this.clientId);
         
         this.client.onMessageArrived = (message) => {
-            //console.log("Message arrived ", message);
-            this.onMessage(message.destinationName, message.payloadString, message.retained, message.qos);
+            
+            let payload, binary;
+
+            try{
+                payload = message.payloadString;
+            } catch(e) {
+                payload = message.payloadBytes 
+                binary = true;
+            }
+            
+            //console.log("Message arrived ", message.destinationName);
+            this.onMessage(message.destinationName, payload, message.retained, message.qos, binary);
         };
 
         this.client.onConnectionLost = (error) => {

@@ -69,8 +69,8 @@ client.onStateChanged = (state) => {
     }
 }
 
-client.onMessage = (topic, msg, retained, qos) => {
-    messages.update(topic, msg, retained, qos);
+client.onMessage = (topic, msg, retained, qos, binary) => {
+    messages.update(topic, msg, retained, qos, binary);
 };
 
 client.connect();

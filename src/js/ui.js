@@ -89,7 +89,7 @@ export class MessageLine {
             .animate({backgroundColor: "#fff"}, 2000);
     }
 
-    update(payload, retained, qos) {
+    update(payload, retained, qos, binary) {
         this.counter ++;
         this.isRetained = retained;
 
@@ -107,14 +107,22 @@ export class MessageLine {
             }
         }
 
-        if (payload == "") 
+        if (binary) 
         {
-            payload = "NULL";
+            payload = "HEX: " + formatByteArray(payload);
             this.isSystemPayload = true;
         }
         else
         {
-            this.isSystemPayload = false;    
+            if (payload == "") 
+            {
+                payload = "NULL";
+                this.isSystemPayload = true;
+            }
+            else
+            {
+                this.isSystemPayload = false;    
+            }
         }
 
         this.$payload.text(payload);
@@ -124,6 +132,16 @@ export class MessageLine {
             this.isNew = false;
         }       
     }
+}
+
+function formatByteArray(a) {
+    var a2 = new Array(a.length);
+
+    for(var i = a.length - 1; i >= 0; i--) {
+        a2[i] = ((a[i] <= 0x0F) ? "0" : "") + a[i].toString(16).toUpperCase();
+    }
+
+    return a2.join(" ");
 }
 
 export class MessageContainer {
@@ -144,7 +162,7 @@ export class MessageContainer {
         this.$parent.html("");
     }
 
-    update (topic, payload, retained, qos) {
+    update (topic, payload, retained, qos, binary) {
 
         if (!this.lines[topic]) {
 
@@ -154,7 +172,7 @@ export class MessageContainer {
             this.lines[topic] = line;
         }
 
-        this.lines[topic].update(payload, retained, qos);
+        this.lines[topic].update(payload, retained, qos, binary);
     }
 
     addLineAlphabetically (line) {
