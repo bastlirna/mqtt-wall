@@ -310,9 +310,9 @@ export class Toolbar extends EventEmitter {
     initDefaultTopic () {
         // URL hash 
         if (location.hash !== "") {
-            this._topic = location.hash.substr(1);
+            this._topic = config.mqttTopicPrefix + location.hash.substr(1);
         } else {
-            this._topic = config.defaultTopic || "/#";
+            this._topic = config.mqttTopicPrefix + config.defaultTopic || config.mqttTopicPrefix + "/#";
         }
 
         this.updateUi();
