@@ -71,6 +71,7 @@ export class MessageLine {
         this.$qosMark = $("<span class='mark qos' title='Received message QoS'>QoS</span>")
             .appendTo(header);
 
+        this.$date = $("<span class='date'></span>").appendTo(this.$root);
         this.$payload = $("<p>").appendTo(this.$root);
     }
 
@@ -125,6 +126,7 @@ export class MessageLine {
             }
         }
 
+        this.$date.text(new Date())
         this.$payload.text(payload);
         this.highlight(this.isNew);
 
