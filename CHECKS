@@ -1,0 +1,3 @@
+# configure dokku check
+WAIT=30
+ATTEMPTS=3
