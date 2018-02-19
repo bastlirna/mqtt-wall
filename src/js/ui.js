@@ -127,7 +127,12 @@ export class MessageLine {
         }
 
         this.$date.text(new Date())
-        this.$payload.text(payload);
+        try {
+            payload = JSON.parse(payload)
+            this.$payload.prepend(renderjson.set_show_to_level(1)(payload))
+        } catch (e) {
+            this.$payload.prepend(payload)
+        }
         this.highlight(this.isNew);
 
         if (this.isNew) {
