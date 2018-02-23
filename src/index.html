@@ -25,11 +25,7 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                // Full URI of server (include protocol ws:// or wss:// for secure connection) and path ("/" is required if path is empty)
-                // Examples for http://test.mosquitto.org/:
-                //   - insecure connection:  "ws://test.mosquitto.org:8080/"
-                //   - secure connection:    "wss://test.mosquitto.org:8081/"
-                uri: "ws://localhost:8080/",
+                uri: "ws://" + document.location.host + "/ws",
 
                 // User name (optional)
                 //username: "",
@@ -48,7 +44,10 @@
             alphabeticalSort: true,
 
             // QoS of subscription (0 .. 2)
-            qos: 0
+            qos: 0,
+
+            // if set prepend, at subscription time, the prefix to topic
+            mqttTopicPrefix: ""
         };
 
         </script>
@@ -81,6 +80,7 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/renderjson@1.3.1/renderjson.min.js"></script>
         <script type="text/javascript" src="wall.js"></script>
     </body>
 </html>

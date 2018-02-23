@@ -71,6 +71,7 @@ export class MessageLine {
         this.$qosMark = $("<span class='mark qos' title='Received message QoS'>QoS</span>")
             .appendTo(header);
 
+        this.$date = $("<span class='date'></span>").appendTo(this.$root);
         this.$payload = $("<p>").appendTo(this.$root);
     }
 
@@ -125,7 +126,13 @@ export class MessageLine {
             }
         }
 
-        this.$payload.text(payload);
+        this.$date.text(new Date())
+        try {
+            payload = JSON.parse(payload)
+            this.$payload.prepend(renderjson.set_show_to_level(1)(payload))
+        } catch (e) {
+            this.$payload.prepend(payload)
+        }
         this.highlight(this.isNew);
 
         if (this.isNew) {
@@ -308,9 +315,9 @@ export class Toolbar extends EventEmitter {
     initDefaultTopic () {
         // URL hash 
         if (location.hash !== "") {
-            this._topic = location.hash.substr(1);
+            this._topic = config.mqttTopicPrefix + location.hash.substr(1);
         } else {
-            this._topic = config.defaultTopic || "/#";
+            this._topic = config.mqttTopicPrefix + config.defaultTopic || config.mqttTopicPrefix + "/#";
         }
 
         this.updateUi();

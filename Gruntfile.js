@@ -165,6 +165,7 @@ module.exports = function (grunt) {
         },
         options: {
           watchTask: true,
+          port: 5000,
           server: {
             baseDir: "./dist"
           }
