@@ -1,11 +1,12 @@
 FROM node:slim
 
 WORKDIR /app
-ENV MQTT_SERVER mosquitto
-ENV MQTT_PORT 1884
+ENV MQTT_URI="ws://172.17.0.1:1884/"
+
+ADD package.json /app
+
+RUN npm install --dev && npm install
 
 ADD . /app
-
-RUN apt-get update && apt-get install -y socat && npm install --dev
 
 CMD ["/app/entrypoint.sh"]
