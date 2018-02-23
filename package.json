@@ -25,5 +25,9 @@
     "load-grunt-tasks": "^3.5.0",
     "time-grunt": "^1.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.17.4",
+    "morgan": "^1.9.0"
+  }
 }
