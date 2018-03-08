@@ -25,7 +25,7 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                uri: "ws://" + document.location.host + "/ws",
+                uri: (document.location.protocol == "https:" ? "wss:" : "ws:") + "//" + document.location.host + "/ws",
 
                 // User name (optional)
                 //username: "",
