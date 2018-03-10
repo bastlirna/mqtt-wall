@@ -5,7 +5,7 @@ ENV MQTT_URI="ws://172.17.0.1:1884/"
 
 ADD package.json /app
 
-RUN npm install --dev && npm install
+RUN npm install
 
 ADD . /app
 
