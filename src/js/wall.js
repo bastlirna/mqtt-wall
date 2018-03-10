@@ -14,7 +14,6 @@ let toolbar = new Toolbar($("#header"));
 messages.sort = config.alphabeticalSort ? MessageContainer.SORT_APLHA : MessageContainer.SORT_CHRONO;
 
 footer.clientId = client.clientId;
-footer.uri = client.toString();
 footer.state = 0;
 
 function load() {

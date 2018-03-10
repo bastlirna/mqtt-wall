@@ -221,10 +221,6 @@ export class Footer {
         $("#status-client").text(value);
     }
 
-    set uri(value) {
-        $("#status-host").text(value);
-    }
-
     set state(value) {
         let text, className;
 
