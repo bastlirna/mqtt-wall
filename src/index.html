@@ -25,7 +25,7 @@
 
             // MQTT server to connect (must support websocket protocol)
             server: {
-                uri: (document.location.protocol == "https:" ? "wss:" : "ws:") + "//" + document.location.host + "/ws",
+                uri: "wss://wall.dokku.skyfield.io/ws",
 
                 // User name (optional)
                 //username: "",
@@ -59,6 +59,10 @@
             <div id="header">
                 <div id="topic-box">
                     <input type="text" id="topic" value="" title="Topic to subscribe">
+                </div>
+                <div class="limit-messages">
+                    Keep last 3 messages per topic
+                    <input type="checkbox" name="limit-messages" id="limit-messages">
                 </div>
             </div>
 

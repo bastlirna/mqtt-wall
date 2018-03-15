@@ -90,7 +90,7 @@ export class MessageLine {
             .animate({backgroundColor: "#fff"}, 2000);
     }
 
-    update(payload, retained, qos, binary) {
+    update(payload, retained, qos, binary, limitTo) {
         this.counter ++;
         this.isRetained = retained;
 
@@ -133,11 +133,13 @@ export class MessageLine {
         } catch (e) {
             this.$payload.prepend(payload)
         }
+        // limit the amount of messages displayed in the MessageLine
+        if (limitTo) this.$payload.children().toArray().filter((_, idx) => idx > limitTo).map(el => el.remove());
         this.highlight(this.isNew);
 
         if (this.isNew) {
             this.isNew = false;
-        }       
+        }
     }
 }
 
@@ -155,6 +157,7 @@ export class MessageContainer {
 
     constructor($parent) {
         this.sort = 'Alphabetically';
+        this.messageLimit = false;
         this.$parent = $parent;
         this.init();
     }
@@ -179,7 +182,9 @@ export class MessageContainer {
             this.lines[topic] = line;
         }
 
-        this.lines[topic].update(payload, retained, qos, binary);
+        const maxMessages = this.messageLimit ? 2 : null;
+
+        this.lines[topic].update(payload, retained, qos, binary, maxMessages);
     }
 
     addLineAlphabetically (line) {
@@ -209,6 +214,10 @@ export class MessageContainer {
     addLineChronologically (line) {
         this.topics.push(line.topic);
         this.$parent.append(line.$root);
+    }
+
+    setMessageLimit (val) {
+        this.messageLimit = val;
     }
 }
 
@@ -265,6 +274,7 @@ export class Toolbar extends EventEmitter {
         
         this.$parent = parent;
         this.$topic = parent.find("#topic");
+        this.$limitMessages = parent.find("#limit-messages");
         
         this.initEventHandlers();
         this.initDefaultTopic();
@@ -294,6 +304,11 @@ export class Toolbar extends EventEmitter {
             } else {
                 this.inputChanged();
             } 
+        });
+
+        this.$limitMessages.change(e => {
+            console.log("Changed limitMessages:", e.currentTarget.checked);
+            this.emit("limit", e.currentTarget.checked);
         });
     }
 

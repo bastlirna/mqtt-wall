@@ -31,6 +31,10 @@ toolbar.on("topic", () => {
     load();
 });
 
+toolbar.on("limit", val => {
+    messages.setMessageLimit(val); // bool
+});
+
 client.onConnected = () => {
     load();
     UI.toast("Connected to host " + client.toString());
