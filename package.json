@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {},
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-preset-es2015": "*",
     "babelify": "^8.0.0",
     "cssnano": "^3.10.0",
