@@ -1,1 +1,328 @@
-a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:"";content:none}table{border-collapse:collapse;border-spacing:0}a,a:active,a:focus,a:hover{text-decoration:none}body,html{font-family:Calibri,sans-serif;margin:0;padding:0}#header{padding:.5em;background-color:#555;position:fixed;z-index:1;box-shadow:0 0 5px 0 #555}#header,#header #topic{width:100%;color:#fff;box-sizing:border-box}#header #topic{font-family:Consolas,Lucida Console,Monaco CE,fixed,monospace;padding:2px;display:block;border:none;font-size:100%;background:none;cursor:pointer}#header #topic:focus{background-color:#626262;cursor:auto}#header #topic-box{width:100%;box-sizing:border-box}#toast{position:absolute;top:0;right:0;z-index:2;font-size:90%;position:fixed}#toast .toast-item{margin:8px 10px;padding:4px 12px;text-align:right;border-radius:4px;box-shadow:0 0 12px #333;float:right;clear:right}#toast .toast-item a{color:#aaa}#toast .toast-item.info{background-color:#161;color:#fff}#toast .toast-item.error{background-color:#801515;color:#fff}.messages{padding-top:2.4em}.messages .message{text-align:right;border-bottom:1px solid #555;padding:.3rem}.messages .message:after,.messages .message:before{content:" ";display:table}.messages .message:after{clear:both}.messages .message header{float:left;padding:.1rem;color:#333;font-size:1.1rem}.messages .message header h2{display:inline-block;padding-top:.2rem;margin-right:.5rem}.messages .message header .mark{display:inline-block;background-color:#ccc;color:#666;font-size:.7rem;padding:.1rem .2rem;margin:-.1rem .3rem 0 0;border-radius:.3rem;cursor:default;vertical-align:middle}.messages .message header .mark.retain{background-color:#e24c4c;color:#fff}.messages .message header .mark.qos[data-qos="1"]{background-color:#666;color:#fff}.messages .message header .mark.qos[data-qos="2"]{background-color:#111;color:#fff}.messages .message p{float:right;font-size:1.1rem;display:inline-block;padding:.3rem .5rem;font-family:Consolas,Lucida Console,Monaco CE,fixed,monospace;font-weight:700;border-radius:.3rem;color:#333;background-color:#fff}#footer{clear:both;margin:15px;text-align:center;color:#777;font-size:75%}#footer p{margin:0;padding:0}#footer a{color:#888;text-decoration:underline}#footer code{padding:1px 4px;margin:1px 0;display:inline-block;background-color:#eee;border-radius:3px;font-family:Calibri,sans-serif}#footer #status-state.connected em{color:green}#footer #status-state.connecting em{color:orange}#footer #status-state.fail em{color:red}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+}
+a:active,
+a:focus,
+a:hover {
+  text-decoration: none;
+}
+html,
+body {
+  font-family: Calibri, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+#header {
+  padding: .5em;
+  width: 100%;
+  background-color: #555;
+  color: #ffffff;
+  position: fixed;
+  box-sizing: border-box;
+  z-index: 1;
+  -webkit-box-shadow: 0px 0px 5px 0px #555;
+  -moz-box-shadow: 0px 0px 5px 0px #555;
+  box-shadow: 0px 0px 5px 0px #555;
+}
+#header #topic {
+  font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+  color: #ffffff;
+  padding: 2px;
+  display: block;
+  border: none;
+  width: 100%;
+  font-size: 100%;
+  background: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#header #topic:focus {
+  background-color: #626262;
+  cursor: auto;
+}
+#header #topic-box {
+  width: 100%;
+  box-sizing: border-box;
+}
+/*
+Toast code:
+
+<div id="toast">
+    <div class="toast-item info">
+        Information, huray
+    </div>
+</div>
+*/
+#toast {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  font-size: 90%;
+  position: fixed;
+}
+#toast .toast-item {
+  margin: 8px 10px;
+  padding: 4px 12px;
+  text-align: right;
+  border-radius: 4px;
+  box-shadow: 0 0 12px #333;
+  float: right;
+  clear: right;
+}
+#toast .toast-item a {
+  color: #aaa;
+}
+#toast .toast-item.info {
+  background-color: #116611;
+  color: #fff;
+}
+#toast .toast-item.error {
+  background-color: #801515;
+  color: #fff;
+}
+/*
+Messages code:
+
+<section class="messages">
+    <article class="message">
+        <header>
+            <h2>/dotgrid/text</h2><span class="mark retain">R</span><span class="mark counter">123</span>
+        </header>
+        <p>1234</p>
+    </article>
+    <article class="message">
+        <header>
+            <h2>/dotgrid/text2/assdasda/sda</h2><span class="mark counter">8888</span>
+        </header>
+        <p>Nějaká hodně dlouhý<br>více řádkový<br>text</p>
+    </article>
+</section>
+*/
+.messages {
+  padding-top: 2.4em;
+}
+.messages .message {
+  text-align: right;
+  border-bottom: solid #555 1px;
+  padding: .3rem;
+}
+.messages .message:before,
+.messages .message:after {
+  content: " ";
+  display: table;
+}
+.messages .message:after {
+  clear: both;
+}
+.messages .message header {
+  float: left;
+  padding: .1rem;
+  color: #333;
+  font-size: 1.1rem;
+}
+.messages .message header h2 {
+  display: inline-block;
+  padding-top: .2rem;
+  margin-right: .5rem;
+}
+.messages .message header .mark {
+  display: inline-block;
+  background-color: #ccc;
+  color: #666;
+  font-size: 0.70rem;
+  padding: 0.1rem 0.2rem;
+  margin: -0.1rem 0.3rem 0 0;
+  border-radius: 0.3rem;
+  cursor: default;
+  vertical-align: middle;
+}
+.messages .message header .mark.retain {
+  background-color: #e24c4c;
+  color: #fff;
+}
+.messages .message header .mark.qos[data-qos="1"] {
+  background-color: #666;
+  color: #fff;
+}
+.messages .message header .mark.qos[data-qos="2"] {
+  background-color: #111;
+  color: #fff;
+}
+.messages .message p {
+  float: right;
+  font-size: 1.1rem;
+  display: inline-block;
+  padding: .3rem .5rem;
+  font-family: Consolas, 'Lucida Console', 'Monaco CE', fixed, monospace;
+  font-weight: bold;
+  border-radius: .3rem;
+  color: #333;
+  background-color: #fff;
+}
+.messages .message p.sys {
+  font-style: italic;
+  font-weight: normal;
+  color: #555;
+}
+#footer {
+  clear: both;
+  margin: 15px;
+  text-align: center;
+  color: #777;
+  font-size: 75%;
+}
+#footer p {
+  margin: 0;
+  padding: 0;
+}
+#footer a {
+  color: #888;
+  text-decoration: underline;
+}
+#footer code {
+  padding: 1px 4px;
+  margin: 1px 0;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: Calibri, sans-serif;
+}
+#footer #status-state.connected em {
+  color: green;
+}
+#footer #status-state.connecting em {
+  color: orange;
+}
+#footer #status-state.fail em {
+  color: red;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9yZXNldC5sZXNzIiwic3JjL3N0eWxlLmxlc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUtBO0FBQU07QUFBTTtBQUFLO0FBQU07QUFBUTtBQUFRO0FBQ3ZDO0FBQUk7QUFBSTtBQUFJO0FBQUk7QUFBSTtBQUFJO0FBQUc7QUFBWTtBQUN2QztBQUFHO0FBQU07QUFBUztBQUFTO0FBQUs7QUFBTTtBQUN0QztBQUFLO0FBQUs7QUFBSTtBQUFLO0FBQUs7QUFBSztBQUFHO0FBQUc7QUFDbkM7QUFBTztBQUFRO0FBQVE7QUFBSztBQUFLO0FBQUk7QUFDckM7QUFBRztBQUFHO0FBQUc7QUFDVDtBQUFJO0FBQUk7QUFBSTtBQUFJO0FBQUk7QUFDcEI7QUFBVTtBQUFNO0FBQU87QUFDdkI7QUFBTztBQUFTO0FBQU87QUFBTztBQUFPO0FBQUk7QUFBSTtBQUM3QztBQUFTO0FBQU87QUFBUTtBQUFTO0FBQ2pDO0FBQVE7QUFBWTtBQUFRO0FBQVE7QUFDcEM7QUFBTTtBQUFLO0FBQVE7QUFBTTtBQUFTO0FBQ2xDO0FBQU07QUFBTTtBQUFPO0VBQ2xCLFNBQUE7RUFDQSxVQUFBO0VBQ0EsU0FBQTtFQUNBLGVBQUE7RUFDQSxhQUFBO0VBQ0Esd0JBQUE7OztBQUdEO0FBQVM7QUFBTztBQUFTO0FBQVk7QUFDckM7QUFBUTtBQUFRO0FBQVE7QUFBTTtBQUFLO0VBQ2xDLGNBQUE7O0FBRUQ7RUFDQyxjQUFBOztBQUVEO0FBQUk7RUFDSCxnQkFBQTs7QUFFRDtBQUFZO0VBQ1gsWUFBQTs7QUFFRCxVQUFVO0FBQVMsVUFBVTtBQUM3QixDQUFDO0FBQVMsQ0FBQztFQUNWLFNBQVMsRUFBVDtFQUNBLGFBQUE7O0FBRUQ7RUFDQyx5QkFBQTtFQUNBLGlCQUFBOztBQUVEO0VBQ0MscUJBQUE7O0FBRUEsQ0FBQztBQUNELENBQUM7QUFDRCxDQUFDO0VBQ0EscUJBQUE7O0FDOUJGO0FBQU07RUFDRixnQ0FBQTtFQUNBLFNBQUE7RUFDQSxVQUFBOztBQUtKO0VBRUks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 */
