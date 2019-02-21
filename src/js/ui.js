@@ -1,6 +1,16 @@
 import {EventEmitter} from './utils.js';
 import {WallClient} from './client.js';
 
+function formatByteArray(a) {
+    var a2 = new Array(a.length);
+
+    for(var i = a.length - 1; i >= 0; i--) {
+        a2[i] = ((a[i] <= 0x0F) ? "0" : "") + a[i].toString(16).toUpperCase();
+    }
+
+    return a2.join(" ");
+}
+
 export var UI = {};
 
 UI.setTitle = function (topic) {
@@ -98,7 +108,7 @@ export class MessageLine {
         }
         
         if (this.$qosMark) {
-            if (qos == 0) {
+            if (qos === 0) {
                 this.$qosMark.hide();
             } else {
                 this.$qosMark.show();
@@ -114,7 +124,7 @@ export class MessageLine {
         }
         else
         {
-            if (payload == "") 
+            if (payload === "") 
             {
                 payload = "NULL";
                 this.isSystemPayload = true;
@@ -132,16 +142,6 @@ export class MessageLine {
             this.isNew = false;
         }       
     }
-}
-
-function formatByteArray(a) {
-    var a2 = new Array(a.length);
-
-    for(var i = a.length - 1; i >= 0; i--) {
-        a2[i] = ((a[i] <= 0x0F) ? "0" : "") + a[i].toString(16).toUpperCase();
-    }
-
-    return a2.join(" ");
 }
 
 export class MessageContainer {
@@ -177,7 +177,7 @@ export class MessageContainer {
 
     addLineAlphabetically (line) {
 
-        if (this.topics.length == 0) 
+        if (this.topics.length === 0) 
         {
             this.addLineChronologically(line);
             return;
@@ -190,7 +190,7 @@ export class MessageContainer {
 
         var n = this.topics.indexOf(topic);
 
-        if (n == 0){
+        if (n === 0){
             this.$parent.prepend(line.$root);
             return;    
         }

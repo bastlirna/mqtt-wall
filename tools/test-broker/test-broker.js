@@ -2,7 +2,7 @@ var mosca = require('mosca');
  
 var startTime = new Date();
 
-var autoKickOff = false;
+var autoKickOff = true;
 
 var requiredAuthenticate = false;
 
@@ -26,11 +26,11 @@ var server = new mosca.Server(settings);
 server.on('clientConnected', function(client) {
     console.log('CON %s', client.id);
 
-    if (autoKickOff) {
+    if (autoKickOff && client.id != "AdamHorcica_161959140") {
         setTimeout(() => {
             console.log("KICK client %s", client.id);
             client.close();
-        }, 5000 + Math.random() * 10000);
+        }, 1000 + Math.random() * 5000);
     }
 });
  

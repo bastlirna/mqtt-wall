@@ -63,11 +63,11 @@ client.onStateChanged = (state) => {
         reconnectingToast.hide();
         reconnectingToast = null;
 
-        if (client.firstConnection == false) {
+        if (client.firstConnection === false) {
             UI.toast("Reconnected");
         }
     }
-}
+};
 
 client.onMessage = (topic, msg, retained, qos, binary) => {
     messages.update(topic, msg, retained, qos, binary);
